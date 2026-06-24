@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter analyze *)",
+      "Read(//private/tmp/**)",
+      "Bash(unzip -o \"/Users/sadeem./Downloads/osce_backend1.zip\" -d osce_backend)",
+      "Read(//tmp/**)"
+    ]
+  }
+}

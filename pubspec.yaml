@@ -1,0 +1,27 @@
+name: osce_simulator
+description: محاكي محطات OSCE لمهارات التواصل بين الطبيب والمريض — محوّل من SwiftUI إلى Flutter.
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.1.2          # إدارة الحالة (مكافئ ObservableObject/EnvironmentObject)
+  http: ^1.2.0             # الاتصال بالباك إند
+  shared_preferences: ^2.2.0  # تخزين محلي للقوالب والإعدادات (مكافئ SwiftData/AppStorage)
+  file_picker: ^8.0.0      # اختيار الملفات المرفقة
+  syncfusion_flutter_pdf: ^26.0.0  # استخراج نص PDF محليًا
+  google_fonts: ^6.2.0     # خط IBM Plex Sans Arabic
+  share_plus: ^9.0.0       # مشاركة النتائج
+  intl: ^0.19.0            # تنسيق التواريخ
+
+dev_dependencies:
+  flutter_lints: ^4.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true

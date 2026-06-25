@@ -92,7 +92,7 @@ class AppStrings {
   String get duration => isArabic ? 'المدة' : 'Duration';
   String get messages => isArabic ? 'الرسائل' : 'Messages';
 
-  // ===== Rubric Library =====
+  // ===== Rubric Library11 =====
   String get evaluationRubrics => isArabic ? 'أوراق التقييم' : 'Evaluation Rubrics';
   String get uploadRubric => isArabic ? 'رفع ورقة تقييم' : 'Upload Rubric';
   String get savedRubrics => isArabic ? 'أوراق التقييم المحفوظة' : 'Saved Rubrics';

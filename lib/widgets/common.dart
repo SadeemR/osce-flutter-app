@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
 
-/// بطاقة كريمية مع ظل خفيف — محوّلة من CardContainer
 class CardContainer extends StatelessWidget {
   final Widget child;
   final EdgeInsets padding;
@@ -29,7 +28,6 @@ class CardContainer extends StatelessWidget {
   }
 }
 
-/// حقل إدخال بعنوان — محوّل من CaseFormField.swift
 class CaseFormField extends StatelessWidget {
   final String label;
   final String placeholder;
@@ -98,7 +96,6 @@ class CaseFormField extends StatelessWidget {
   }
 }
 
-/// أيقونة حسب امتداد الملف
 IconData fileIconFor(String name) {
   final ext = name.contains('.') ? name.split('.').last.toLowerCase() : '';
   switch (ext) {

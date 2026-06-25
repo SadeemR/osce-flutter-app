@@ -429,7 +429,6 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
   }
 }
 
-/// صف معيار قابل للتوسيع — محوّل من CriterionRow
 class CriterionRow extends StatefulWidget {
   final EvaluationScore item;
   const CriterionRow({super.key, required this.item});

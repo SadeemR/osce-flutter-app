@@ -1,8 +1,6 @@
 import 'dart:convert';
 import '../models/rubric_template.dart';
 
-/// محلّل ورقة التقييم — محوّل من RubricParser.swift
-/// يجرّب JSON أولًا، ثم تحليلًا استدلاليًا للأسطر.
 class RubricParser {
   static List<RubricCriterion> parse(String rawText) {
     final cleaned = rawText.trim();

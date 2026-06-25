@@ -13,15 +13,12 @@ class ApiException implements Exception {
   String toString() => message;
 }
 
-/// نتيجة بدء جلسة: الرسالة الأولى ومعرّف الجلسة الخاص بالطالب
 class CaseStartResult {
   final String initialMessage;
   final String sessionId;
   CaseStartResult({required this.initialMessage, required this.sessionId});
 }
 
-/// خدمة الاتصال بالباك إند (Flask على Railway) — محوّلة من APIService.swift
-/// تتصل بنفس الـ endpoints الموجودة في خادمك الحالي.
 class ApiService {
   ApiService(this.baseURL);
   final String baseURL;
@@ -38,11 +35,29 @@ class ApiService {
     }
   }
 
-  static const _defaultGreeting =
-      "Hello Doctor, I'm really worried about my child...";
+  /// يولّد رسالة افتتاحية مناسبة بناءً على بيانات الحالة واللغة
+  static String _buildFallbackGreeting(OsceCase c) {
+    final isAr = c.language == 'ar';
+    final patient = c.patientInfo.trim();
+    final complaint = c.complaint.trim();
 
-  /// يولّد معرّف جلسة فريد على جانب العميل
-  /// (الباك إند لا يُعيد session_id حاليًا)
+    if (patient.isEmpty && complaint.isEmpty) {
+      return isAr
+          ? 'السلام عليكم دكتور، أنا هنا لأن عندي مشكلة...'
+          : "Hello Doctor, I need your help with something...";
+    }
+
+    if (isAr) {
+      final patientPart = patient.isNotEmpty ? ' بخصوص $patient' : '';
+      final complaintPart = complaint.isNotEmpty ? '، عنده/عندها $complaint' : '';
+      return 'السلام عليكم دكتور، جيت اليوم$patientPart$complaintPart. ممكن تساعدني؟';
+    } else {
+      final patientPart = patient.isNotEmpty ? ' regarding $patient' : '';
+      final complaintPart = complaint.isNotEmpty ? ' who has $complaint' : '';
+      return "Hello Doctor, I'm here today$patientPart$complaintPart. Can you help me?";
+    }
+  }
+
   static String _generateSessionId() {
     final rand = Random.secure();
     final ts = DateTime.now().millisecondsSinceEpoch;
@@ -53,7 +68,6 @@ class ApiService {
   // ===== تحديث الحالة =====
   Future<CaseStartResult> updateCase(OsceCase c,
       {List<int>? fileBytes, String? fileName}) async {
-    // نولّد معرّف الجلسة مسبقًا (الباك إند لا يُعيده)
     final sessionId = _generateSessionId();
 
     if (fileBytes != null && fileName != null) {
@@ -67,7 +81,7 @@ class ApiService {
       _validate(res);
       final j = jsonDecode(utf8.decode(res.bodyBytes));
       return CaseStartResult(
-        initialMessage: (j['initial_message'] as String?) ?? _defaultGreeting,
+        initialMessage: (j['initial_message'] as String?) ?? _buildFallbackGreeting(c),
         sessionId: (j['session_id'] as String?) ?? sessionId,
       );
     } else {
@@ -78,7 +92,7 @@ class ApiService {
       _validate(res);
       final j = jsonDecode(utf8.decode(res.bodyBytes));
       return CaseStartResult(
-        initialMessage: (j['initial_message'] as String?) ?? _defaultGreeting,
+        initialMessage: (j['initial_message'] as String?) ?? _buildFallbackGreeting(c),
         sessionId: (j['session_id'] as String?) ?? sessionId,
       );
     }
@@ -115,7 +129,6 @@ class ApiService {
     return EvaluationResult.fromApi(j);
   }
 
-  // ===== تحليل ورقة التقييم (Word/Excel) في الخادم =====
   Future<List<RubricCriterion>> parseRubricFile(
       {required List<int> bytes, required String fileName}) async {
     final req = http.MultipartRequest('POST', _url('/parse-rubric'));

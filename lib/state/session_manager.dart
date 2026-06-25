@@ -4,7 +4,6 @@ import '../models/osce_case.dart';
 import '../models/rubric_template.dart';
 import '../models/evaluation_result.dart';
 
-/// مدير الجلسة والحالة العامة — محوّل من SessionManager.swift
 class SessionManager extends ChangeNotifier {
   OsceCase currentCase = OsceCase.empty;
   String sessionId = ''; // معرّف الجلسة الخاص بهذا الطالب

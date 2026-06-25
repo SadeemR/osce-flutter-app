@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-/// معيار واحد في ورقة التقييم — محوّل من RubricCriterion
 class RubricCriterion {
   final String id;
   String name;
@@ -31,7 +30,6 @@ class RubricCriterion {
       };
 }
 
-/// قالب ورقة تقييم محفوظ محليًا — محوّل من RubricTemplate (SwiftData @Model)
 class RubricTemplate {
   final String id;
   String name;
@@ -52,7 +50,6 @@ class RubricTemplate {
   })  : id = id ?? DateTime.now().microsecondsSinceEpoch.toString(),
         createdAt = createdAt ?? DateTime.now();
 
-  /// المعايير المُحلّلة من criteriaJSON
   List<RubricCriterion> get criteria {
     try {
       final decoded = jsonDecode(criteriaJSON);
@@ -70,7 +67,6 @@ class RubricTemplate {
     criteriaJSON = jsonEncode(list.map((c) => c.toJson()).toList());
   }
 
-  // التخزين المحلي (بدل SwiftData)
   factory RubricTemplate.fromJson(Map<String, dynamic> j) => RubricTemplate(
         id: j['id'] as String?,
         name: j['name'] ?? '',

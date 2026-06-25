@@ -22,7 +22,6 @@ class SettingsScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          // ===== المؤقّتات =====
           _sectionTitle('مؤقّتات الجلسة'),
           _card(Column(
             children: [
@@ -51,7 +50,6 @@ class SettingsScreen extends StatelessWidget {
           )),
           const SizedBox(height: 20),
 
-          // ===== اللغة =====
           _sectionTitle('اللغة الافتراضية'),
           _card(Row(
             children: AppLanguage.values.map((lang) {
@@ -86,7 +84,6 @@ class SettingsScreen extends StatelessWidget {
           )),
           const SizedBox(height: 20),
 
-          // ===== حول التطبيق =====
           _sectionTitle('حول التطبيق'),
           _card(Column(
             children: [
@@ -168,7 +165,6 @@ class SettingsScreen extends StatelessWidget {
       );
 }
 
-/// سياسة الخصوصية — محوّلة من PrivacyPolicyView
 class PrivacyPolicyScreen extends StatelessWidget {
   const PrivacyPolicyScreen({super.key});
 

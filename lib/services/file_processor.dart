@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:syncfusion_flutter_pdf/pdf.dart';
 
-/// أنواع الملفات المدعومة — محوّل من SupportedFileType
 enum SupportedFileType {
   pdf,
   docx,
@@ -35,7 +34,6 @@ enum SupportedFileType {
     }
   }
 
-  /// هل يمكن استخراج النص محليًا؟ وإلا يُرفع للباك إند
   bool get canExtractLocally {
     switch (this) {
       case pdf:
@@ -48,11 +46,9 @@ enum SupportedFileType {
     }
   }
 
-  // الصيغ المدعومة فعليًا (تُستخرج محليًا): PDF, TXT, CSV, JSON
   static const allowedExtensions = ['pdf', 'txt', 'json', 'csv'];
 }
 
-/// ملف بعد المعالجة — محوّل من ProcessedFile
 class ProcessedFile {
   final String fileName;
   final String extractedText;
@@ -76,7 +72,6 @@ class FileProcessorException implements Exception {
   String toString() => message;
 }
 
-/// معالج الملفات — محوّل من FileProcessor.swift
 class FileProcessor {
   static ProcessedFile process({
     required String fileName,
@@ -116,7 +111,6 @@ class FileProcessor {
       );
     }
 
-    // Word / Excel → الباك إند
     return ProcessedFile(
       fileName: fileName,
       extractedText: '',

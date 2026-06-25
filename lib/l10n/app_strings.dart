@@ -1,4 +1,3 @@
-/// نصوص التطبيق — عربي وإنجليزي
 class AppStrings {
   final bool isArabic;
   const AppStrings(this.isArabic);

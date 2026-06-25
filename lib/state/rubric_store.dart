@@ -3,8 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/rubric_template.dart';
 
-/// مخزن قوالب التقييم — مكافئ RubricStore (كان SwiftData)
-/// يخزّن القوالب محليًا كـ JSON في shared_preferences.
 class RubricStore extends ChangeNotifier {
   static const _key = 'rubric_templates';
   List<RubricTemplate> _templates = [];

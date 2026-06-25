@@ -147,7 +147,6 @@ class _PreparationScreenState extends State<PreparationScreen> {
     );
   }
 
-  // ===== بطاقة المؤقت (خلفية متدرجة) =====
   Widget _timerCard() {
     return Container(
       width: double.infinity,
@@ -221,7 +220,6 @@ class _PreparationScreenState extends State<PreparationScreen> {
   }
 }
 
-/// صف معلومة — محوّل من InfoRow
 class _InfoRow extends StatelessWidget {
   final String label;
   final String value;

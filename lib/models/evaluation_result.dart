@@ -1,4 +1,3 @@
-/// درجة معيار واحد — محوّلة من EvaluationScore
 class EvaluationScore {
   final String id;
   final String criterionName;
@@ -36,8 +35,6 @@ class EvaluationScore {
   }
 }
 
-/// نتيجة التقييم الكاملة — محوّلة من EvaluationResult
-/// المجموع متوسط مرجّح بالأوزان (weighted average).
 class EvaluationResult {
   final String id;
   final List<EvaluationScore> scores;
@@ -79,7 +76,6 @@ class EvaluationResult {
     return 'Poor';
   }
 
-  /// بناء النتيجة من رد الباك إند (مكافئ toEvaluationResult)
   factory EvaluationResult.fromApi(Map<String, dynamic> json) {
     final scoresMap = (json['scores'] is Map)
     ? json['scores'] as Map

@@ -1,5 +1,3 @@
-/// حالة OSCE — محوّلة من OSCECase.swift
-/// تدعم الحقول اليدوية الأربعة + ملف مرفق.
 class OsceCase {
   String patientInfo;
   String complaint;
@@ -25,7 +23,6 @@ class OsceCase {
     DateTime? createdAt,
   }) : createdAt = createdAt ?? DateTime.now();
 
-  /// صحيح إذا فيه محتوى
   bool get hasContent {
     final manual = patientInfo.trim().isNotEmpty ||
         complaint.trim().isNotEmpty ||
@@ -37,7 +34,6 @@ class OsceCase {
     return manual || file;
   }
 
-  /// الوصف الكامل
   String get fullDescription {
     final parts = <String>[];
 
@@ -64,7 +60,6 @@ class OsceCase {
     return parts.join('\n\n');
   }
 
-  /// 🔥 API PAYLOAD (بعد التعديل)
   Map<String, dynamic> get apiPayload => {
         if (patientInfo.isNotEmpty) 'patient': patientInfo,
         if (complaint.isNotEmpty) 'complaint': complaint,

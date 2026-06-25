@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// لوحة ألوان Apricot & Burgundy — محوّلة حرفيًا من AppTheme.swift
 class AppColors {
   // اللوحة الأساسية
   static const burgundy = Color(0xFF6B1230); // 0.42, 0.10, 0.19
@@ -19,7 +18,6 @@ class AppColors {
   static const offWhiteCream = Color(0xFFFDF9F4); // 0.99, 0.98, 0.96
   static const cardCream = Color(0xFFFFF5E6); // 1.00, 0.96, 0.90
 
-  // تدرّج الـ Hero (5 ألوان من CaseInputView)
   static const heroGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -32,7 +30,6 @@ class AppColors {
     ],
   );
 
-  // ألوان دلالية للتقييم
   static const ratingGreen = Color(0xFF2E9E5B);
   static const ratingBlue = brandPrimary;
   static const ratingOrange = apricot;

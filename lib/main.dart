@@ -46,7 +46,6 @@ class OsceSimulatorApp extends StatelessWidget {
                 centerTitle: true,
               ),
             ),
-            // الاتجاه يتبع اللغة (RTL للعربية)
             builder: (context, child) => Directionality(
               textDirection:
                   settings.isArabic ? TextDirection.rtl : TextDirection.ltr,

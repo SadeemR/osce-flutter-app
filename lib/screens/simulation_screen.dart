@@ -34,7 +34,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
       _startTimer();
       setState(() {});
     });
-    _input.addListener(() => setState(() {})); // لتحديث حالة زر الإرسال
+    _input.addListener(() => setState(() {}));
   }
 
   void _startTimer() {
@@ -89,7 +89,6 @@ class _SimulationScreenState extends State<SimulationScreen> {
             .showSnackBar(SnackBar(content: Text('خطأ: $e')));
       }
     } finally {
-      // ضمان إزالة أي رسائل تحميل متبقية
       session.removeLoadingMessages();
       if (mounted) setState(() => _waitingForReply = false);
       _scrollToEnd();
@@ -109,7 +108,6 @@ class _SimulationScreenState extends State<SimulationScreen> {
     if (!_sessionActive) return;
     _timer?.cancel();
     setState(() => _sessionActive = false);
-    // تأخير بسيط قبل الانتقال (مثل onChange في SwiftUI)
     Future.delayed(const Duration(milliseconds: 1500), () {
       if (!mounted) return;
       Navigator.of(context).pushReplacement(
@@ -147,7 +145,6 @@ class _SimulationScreenState extends State<SimulationScreen> {
     );
   }
 
-  // ===== ترويسة المؤقت =====
   Widget _timerHeader() {
     return Opacity(
       opacity: _sessionActive ? 1.0 : 0.6,
@@ -217,7 +214,6 @@ class _SimulationScreenState extends State<SimulationScreen> {
     );
   }
 
-  // ===== قائمة المحادثة =====
   Widget _chatList(SessionManager session) {
     return ListView(
       controller: _scroll,
@@ -244,7 +240,6 @@ class _SimulationScreenState extends State<SimulationScreen> {
     );
   }
 
-  // ===== شريط الإدخال =====
   Widget _inputBar() {
     return Container(
       decoration: const BoxDecoration(
@@ -299,7 +294,6 @@ class _SimulationScreenState extends State<SimulationScreen> {
   }
 }
 
-/// فقاعة رسالة — محوّلة من MessageBubble
 class MessageBubble extends StatelessWidget {
   final ChatMessage message;
   const MessageBubble({super.key, required this.message});
@@ -332,7 +326,6 @@ class MessageBubble extends StatelessWidget {
         crossAxisAlignment:
             _isDoctor ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          // اسم المرسل
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4),
             child: Text(message.sender.raw,
@@ -344,7 +337,6 @@ class MessageBubble extends StatelessWidget {
                         : AppColors.burgundyMid)),
           ),
           const SizedBox(height: 4),
-          // الفقاعة
           Container(
             constraints: BoxConstraints(
                 maxWidth: MediaQuery.of(context).size.width - 80),
@@ -372,7 +364,6 @@ class MessageBubble extends StatelessWidget {
                   ),
           ),
           const SizedBox(height: 4),
-          // الطابع الزمني
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4),
             child: Text(DateFormat.jm().format(message.timestamp),
@@ -384,7 +375,6 @@ class MessageBubble extends StatelessWidget {
   }
 }
 
-/// مؤشر الكتابة المنقّط المتحرك — محوّل من TypingIndicator
 class TypingIndicator extends StatefulWidget {
   const TypingIndicator({super.key});
 

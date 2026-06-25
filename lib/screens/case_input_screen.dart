@@ -123,7 +123,6 @@ Future<void> _submit() async {
     final prompt = await api.generatePrompt(_case);
     if (prompt != null) _case.aiGeneratedPrompt = prompt;
 
-    // 🔥 FIX: هذا أهم تعديل
     final startResult = await api.updateCase(
       _case,
       fileBytes: _caseFileData,
@@ -203,7 +202,6 @@ Future<void> _submit() async {
     );
   }
 
-  // ===== Hero Header =====
   Widget _heroHeader() {
     final settings = context.watch<AppSettings>();
     return Container(
@@ -216,7 +214,6 @@ Future<void> _submit() async {
           padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
           child: Column(
             children: [
-              // شريط علوي: أيقونتا المكتبة والإعدادات
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -257,7 +254,6 @@ Future<void> _submit() async {
                   style: TextStyle(
                       color: Colors.white.withValues(alpha: 0.7), fontSize: 13)),
               const SizedBox(height: 16),
-              // مبدّل اللغة بالأعلام
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: AppLanguage.values.map((lang) {
@@ -391,7 +387,6 @@ Future<void> _submit() async {
     );
   }
 
-  // ===== الإدخال اليدوي =====
   Widget _manualForm() {
     final s = AppStrings(context.watch<AppSettings>().isArabic);
     return CardContainer(
@@ -579,7 +574,6 @@ Future<void> _submit() async {
   }
 }
 
-/// عنوان بطاقة بأيقونة
 class _CardLabel extends StatelessWidget {
   final IconData icon;
   final String text;

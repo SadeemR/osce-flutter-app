@@ -100,9 +100,9 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
     final result = session.evaluationResult;
 
     return Scaffold(
-      backgroundColor: AppColors.burgundyBackground,
+      backgroundColor: AppColors.offWhiteCream,
       appBar: AppBar(
-        backgroundColor: AppColors.burgundyBackground,
+        backgroundColor: AppColors.offWhiteCream,
         automaticallyImplyLeading: false,
         title: Text(AppStrings(context.watch<AppSettings>().isArabic).evaluationResults),
         actions: [

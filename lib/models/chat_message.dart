@@ -1,10 +1,11 @@
 enum MessageSender {
-  doctor('user'),
-  parent('assistant'),
-  system('system');
+  doctor('user', 'doctor'),
+  parent('assistant', 'patient'),
+  system('system', 'system');
 
-  const MessageSender(this.raw);
+  const MessageSender(this.raw, this.displayName);
   final String raw;
+  final String displayName;
 }
 
 class ChatMessage {

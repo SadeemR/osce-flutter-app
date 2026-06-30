@@ -67,10 +67,10 @@ class _PreparationScreenState extends State<PreparationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.burgundyBackground,
+      backgroundColor: AppColors.offWhiteCream,
       appBar: AppBar(
         title: Text(AppStrings(context.watch<AppSettings>().isArabic).preparationPhase),
-        backgroundColor: AppColors.burgundyBackground,
+        backgroundColor: AppColors.offWhiteCream,
         automaticallyImplyLeading: false,
       ),
       body: SafeArea(

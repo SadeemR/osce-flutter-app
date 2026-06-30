@@ -127,10 +127,10 @@ class _SimulationScreenState extends State<SimulationScreen> {
   Widget build(BuildContext context) {
     final session = context.watch<SessionManager>();
     return Scaffold(
-      backgroundColor: AppColors.burgundyBackground,
+      backgroundColor: AppColors.offWhiteCream,
       appBar: AppBar(
         title: Text(AppStrings(context.watch<AppSettings>().isArabic).osceSimulation),
-        backgroundColor: AppColors.burgundyBackground,
+        backgroundColor: AppColors.offWhiteCream,
         automaticallyImplyLeading: false,
       ),
       body: SafeArea(
@@ -328,13 +328,13 @@ class MessageBubble extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4),
-            child: Text(message.sender.raw,
+            child: Text(message.sender.displayName,
                 style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
                     color: _isDoctor
                         ? AppColors.brandPrimary
-                        : AppColors.burgundyMid)),
+                        : AppColors.apricot)),
           ),
           const SizedBox(height: 4),
           Container(
@@ -342,12 +342,15 @@ class MessageBubble extends StatelessWidget {
                 maxWidth: MediaQuery.of(context).size.width - 80),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
-              color: _isDoctor ? AppColors.brandPrimary : Colors.white,
+              color: _isDoctor ? AppColors.brandPrimary : AppColors.apricotPale,
               borderRadius: BorderRadius.circular(16),
+              border: _isDoctor
+                  ? null
+                  : Border.all(color: AppColors.apricot.withValues(alpha: 0.4), width: 1),
               boxShadow: [
                 BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.06),
-                    blurRadius: 4,
+                    color: Colors.black.withValues(alpha: 0.08),
+                    blurRadius: 6,
                     offset: const Offset(0, 2)),
               ],
             ),

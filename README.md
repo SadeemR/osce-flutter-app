@@ -1,8 +1,6 @@
 # OSCE Simulator — نسخة Flutter
 
-تطبيق محاكاة محطات OSCE لمهارات التواصل بين الطبيب والمريض، **محوَّل بالكامل من SwiftUI إلى Flutter** مع الحفاظ على كل الوظائف والشكل (لوحة Apricot & Burgundy).
-
-## الميزات (مطابقة للنسخة الأصلية)
+## الميزات
 - شاشة إدخال الحالة: ٤ حقول (المريض، الشكوى، النتائج، الموقف) + إرفاق ملف (PDF/Word/Excel/TXT/JSON) + معلومات الطالب + اختيار ورقة التقييم.
 - مبدّل اللغة (عربي/إنجليزي) في الترويسة، مع اتجاه RTL تلقائي.
 - شاشة التحضير بمؤقّت دائري.
@@ -45,14 +43,6 @@ lib/
 │   └── settings_screen.dart       # SettingsView + PrivacyPolicyView
 └── widgets/common.dart            # CardContainer + CaseFormField
 ```
-
-## ملاحظات التحويل (Swift → Flutter)
-- `ObservableObject` / `@EnvironmentObject` → `ChangeNotifier` + حزمة `provider`.
-- `@AppStorage` و `SwiftData` → `shared_preferences` (تخزين JSON محلي).
-- `PDFKit` → `syncfusion_flutter_pdf` لاستخراج نص PDF محليًا.
-- `fileImporter` → `file_picker`.
-- `UIActivityViewController` → `share_plus`.
-- `NavigationStack` → `Navigator` العادي في Flutter.
 
 ## التشغيل
 ```bash

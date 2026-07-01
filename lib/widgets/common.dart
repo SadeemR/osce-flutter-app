@@ -17,7 +17,7 @@ class CardContainer extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: Colors.white.withValues(alpha: 0.05),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
@@ -63,6 +63,7 @@ class CaseFormField extends StatelessWidget {
         ),
         TextField(
           controller: controller,
+          style: const TextStyle(color: Colors.white),
           minLines: isMultiline ? 2 : 1,
           maxLines: isMultiline ? 5 : 1,
           keyboardType: keyboardType ??
@@ -72,18 +73,18 @@ class CaseFormField extends StatelessWidget {
           onSubmitted: onSubmitted != null ? (_) => onSubmitted!() : null,
           decoration: InputDecoration(
             hintText: placeholder,
-            hintStyle: const TextStyle(fontSize: 13, color: Colors.black38),
+            hintStyle: const TextStyle(fontSize: 13, color: Colors.white38),
             filled: true,
-            fillColor: Colors.white,
+            fillColor: AppColors.cardCream,
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.15)),
+              borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.15)),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.black.withValues(alpha: 0.15)),
+              borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.15)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),

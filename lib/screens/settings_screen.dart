@@ -68,7 +68,7 @@ class SettingsScreen extends StatelessWidget {
                       border: Border.all(
                           color: selected
                               ? AppColors.brandPrimary
-                              : Colors.black26),
+                              : Colors.white.withValues(alpha: 0.2)),
                     ),
                     child: Center(
                       child: Text('${lang.flag} ${lang.displayName}',
@@ -138,7 +138,7 @@ class SettingsScreen extends StatelessWidget {
           children: [
             Text(label),
             const Spacer(),
-            Text(display, style: const TextStyle(color: Colors.black54)),
+            Text(display, style: const TextStyle(color: Colors.white70)),
           ],
         ),
         Slider(
@@ -159,7 +159,7 @@ class SettingsScreen extends StatelessWidget {
           children: [
             Text(l, style: const TextStyle(fontWeight: FontWeight.w500)),
             const Spacer(),
-            Text(v, style: const TextStyle(color: Colors.black54)),
+            Text(v, style: const TextStyle(color: Colors.white70)),
           ],
         ),
       );
@@ -185,7 +185,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold, fontSize: 16)),
               const SizedBox(height: 8),
               Text(body,
-                  style: const TextStyle(color: Colors.black54, height: 1.6)),
+                  style: const TextStyle(color: Colors.white70, height: 1.6)),
             ],
           ),
         );
@@ -200,7 +200,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
           const SizedBox(height: 4),
           const Text('آخر تحديث: مايو 2026',
-              style: TextStyle(fontSize: 12, color: Colors.black45)),
+              style: TextStyle(fontSize: 12, color: Colors.white60)),
           const SizedBox(height: 16),
           section('البيانات التي نجمعها',
               'نجمع رقم الطالب، الدرجات، ونصوص المحادثات أثناء محاكاة OSCE.'),

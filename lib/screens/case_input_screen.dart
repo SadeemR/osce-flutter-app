@@ -336,7 +336,7 @@ Future<void> _submit() async {
                                 ? s.serverParsed
                                 : s.locallyExtracted,
                             style: const TextStyle(
-                                fontSize: 12, color: Colors.black54)),
+                                fontSize: 12, color: Colors.white70)),
                       ],
                     ),
                   ),
@@ -369,7 +369,7 @@ Future<void> _submit() async {
                             fontWeight: FontWeight.w600)),
                     const Spacer(),
                     const Text('PDF · TXT · CSV · JSON',
-                        style: TextStyle(fontSize: 11, color: Colors.black45)),
+                        style: TextStyle(fontSize: 11, color: Colors.white60)),
                   ],
                 ),
               ),
@@ -381,7 +381,7 @@ Future<void> _submit() async {
           ],
           const SizedBox(height: 8),
           Text(s.orFillManually,
-              style: const TextStyle(fontSize: 12, color: Colors.black54)),
+              style: const TextStyle(fontSize: 12, color: Colors.white70)),
         ],
       ),
     );
@@ -398,7 +398,7 @@ Future<void> _submit() async {
                   style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
               const Spacer(),
               Text(s.optionalWithFile,
-                  style: const TextStyle(fontSize: 12, color: Colors.black54)),
+                  style: const TextStyle(fontSize: 12, color: Colors.white70)),
             ],
           ),
           const SizedBox(height: 14),
@@ -438,7 +438,7 @@ Future<void> _submit() async {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppColors.ratingGreen.withValues(alpha: 0.08),
+                color: AppColors.ratingGreen.withValues(alpha: 0.2),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -456,7 +456,7 @@ Future<void> _submit() async {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
-                                fontSize: 12, color: Colors.black54)),
+                                fontSize: 12, color: Colors.white70)),
                       ],
                     ),
                   ),
@@ -491,7 +491,7 @@ Future<void> _submit() async {
                             color: AppColors.apricot,
                             fontWeight: FontWeight.w600)),
                     const Spacer(),
-                    const Icon(Icons.chevron_right, color: Colors.black45),
+                    const Icon(Icons.chevron_right, color: Colors.white60),
                   ],
                 ),
               ),
@@ -499,7 +499,7 @@ Future<void> _submit() async {
           if (active == null) ...[
             const SizedBox(height: 8),
             Text(s.noRubricNote,
-                style: const TextStyle(fontSize: 12, color: Colors.black54)),
+                style: const TextStyle(fontSize: 12, color: Colors.white70)),
           ],
         ],
       ),

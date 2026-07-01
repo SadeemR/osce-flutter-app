@@ -141,7 +141,7 @@ class _PreparationScreenState extends State<PreparationScreen> {
               style: const TextStyle(
                   fontSize: 12,
                   fontStyle: FontStyle.italic,
-                  color: Colors.black54)),
+                  color: Colors.white70)),
         ],
       ),
     );
@@ -237,7 +237,7 @@ class _InfoRow extends StatelessWidget {
           const SizedBox(width: 6),
           Expanded(
             child: Text(value,
-                style: const TextStyle(color: Colors.black54)),
+                style: const TextStyle(color: Colors.white70)),
           ),
         ],
       ),

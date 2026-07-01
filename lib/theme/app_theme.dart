@@ -1,37 +1,36 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // اللوحة الأساسية
-  static const burgundy = Color(0xFF7B0D2A);
-  static const burgundyLight = Color(0xFFA01535);
-  static const burgundyMid = Color(0xFFD42B4A);
-  static const apricot = Color(0xFFFF6B2B);
-  static const apricotLight = Color(0xFFFF9A55);
-  static const apricotPale = Color(0xFFFFCC99);
+  static const burgundy = Color(0xFFCC0033);
+  static const burgundyLight = Color(0xFFEE1144);
+  static const burgundyMid = Color(0xFFFF3355);
+  static const apricot = Color(0xFFFF6600);
+  static const apricotLight = Color(0xFFFF8833);
+  static const apricotPale = Color(0xFFFF4400);
 
   static const brandPrimary = burgundy;
   static const brandAccent = apricot;
-  static const brandSurface = apricotPale;
+  static const brandSurface = Color(0xFF2A0A12);
 
-  // خلفيات
-  static const burgundyBackground = Color(0xFFFFCCD8);
-  static const offWhiteCream = Color(0xFFFFE8CC);
-  static const cardCream = Color(0xFFFFD4A0);
+  // Dark backgrounds
+  static const burgundyBackground = Color(0xFF120308);
+  static const offWhiteCream = Color(0xFF1A0510);
+  static const cardCream = Color(0xFF2A0A18);
 
   static const heroGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      Color(0xFF2D0510),
-      Color(0xFF7B0D2A),
-      Color(0xFFB01F3A),
-      Color(0xFFD94030),
-      Color(0xFFFF6B2B),
+      Color(0xFF0A0205),
+      Color(0xFF3D0815),
+      Color(0xFF7A0F28),
+      Color(0xFFBB2020),
+      Color(0xFFFF6600),
     ],
   );
 
-  static const ratingGreen = Color(0xFF1E8C4A);
+  static const ratingGreen = Color(0xFF00DD66);
   static const ratingBlue = brandPrimary;
   static const ratingOrange = apricot;
-  static const ratingRed = Color(0xFFCC1A1A);
+  static const ratingRed = Color(0xFFFF2200);
 }

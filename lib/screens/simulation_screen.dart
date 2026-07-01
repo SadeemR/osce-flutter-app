@@ -232,7 +232,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
                     child: CircularProgressIndicator(strokeWidth: 2)),
                 const SizedBox(width: 8),
                 Text(AppStrings(context.watch<AppSettings>().isArabic).sessionEndedEval,
-                    style: const TextStyle(fontSize: 12, color: Colors.black54)),
+                    style: const TextStyle(fontSize: 12, color: Colors.white70)),
               ],
             ),
           ),
@@ -242,9 +242,9 @@ class _SimulationScreenState extends State<SimulationScreen> {
 
   Widget _inputBar() {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: AppColors.cardCream,
-        border: Border(top: BorderSide(color: Colors.black12)),
+        border: Border(top: BorderSide(color: Colors.white.withValues(alpha: 0.15))),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Row(
@@ -253,6 +253,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
             child: TextField(
               controller: _input,
               enabled: _sessionActive,
+              style: const TextStyle(color: Colors.white),
               minLines: 1,
               maxLines: 4,
               textInputAction: TextInputAction.send,
@@ -260,7 +261,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
               decoration: InputDecoration(
                 hintText: AppStrings(context.watch<AppSettings>().isArabic).typeResponse,
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: AppColors.cardCream,
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 border: OutlineInputBorder(
@@ -312,10 +313,10 @@ class MessageBubble extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
-              color: Colors.black.withValues(alpha: 0.06),
+              color: Colors.white.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(100)),
           child: Text(message.text,
-              style: const TextStyle(fontSize: 12, color: Colors.black54)),
+              style: const TextStyle(fontSize: 12, color: Colors.white70)),
         ),
       );
     }
@@ -349,7 +350,7 @@ class MessageBubble extends StatelessWidget {
                   : Border.all(color: AppColors.apricot.withValues(alpha: 0.4), width: 1),
               boxShadow: [
                 BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.08),
+                    color: Colors.white.withValues(alpha: 0.05),
                     blurRadius: 6,
                     offset: const Offset(0, 2)),
               ],
@@ -362,7 +363,7 @@ class MessageBubble extends StatelessWidget {
                         ? TextDirection.rtl
                         : TextDirection.ltr,
                     style: TextStyle(
-                        color: _isDoctor ? Colors.white : Colors.black87,
+                        color: _isDoctor ? Colors.white : Colors.white,
                         height: 1.4),
                   ),
           ),
@@ -370,7 +371,7 @@ class MessageBubble extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4),
             child: Text(DateFormat.jm().format(message.timestamp),
-                style: const TextStyle(fontSize: 11, color: Colors.black38)),
+                style: const TextStyle(fontSize: 11, color: Colors.white54)),
           ),
         ],
       ),
@@ -424,7 +425,7 @@ class _TypingIndicatorState extends State<TypingIndicator>
                     width: 8,
                     height: 8,
                     decoration: const BoxDecoration(
-                        color: Colors.black45, shape: BoxShape.circle),
+                        color: Colors.white60, shape: BoxShape.circle),
                   ),
                 ),
               );

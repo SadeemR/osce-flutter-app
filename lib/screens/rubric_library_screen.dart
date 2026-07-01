@@ -148,13 +148,13 @@ class _RubricLibraryScreenState extends State<RubricLibraryScreen> {
                 const SizedBox(height: 8),
                 const Text(
                     'اضغط على ورقة لتفعيلها. اسحب لليمين للحذف، أو استخدم زر النجمة للتعيين كافتراضية.',
-                    style: TextStyle(fontSize: 12, color: Colors.black54)),
+                    style: TextStyle(fontSize: 12, color: Colors.white70)),
               ],
             ],
           ),
           if (_processing)
             Container(
-              color: Colors.black26,
+              color: Colors.black54,
               child: const Center(
                 child: Card(
                   child: Padding(
@@ -204,11 +204,11 @@ class _RubricLibraryScreenState extends State<RubricLibraryScreen> {
                   Text('رفع ورقة تقييم',
                       style: TextStyle(fontWeight: FontWeight.w500)),
                   Text('PDF, TXT, CSV, JSON',
-                      style: TextStyle(fontSize: 12, color: Colors.black54)),
+                      style: TextStyle(fontSize: 12, color: Colors.white70)),
                 ],
               ),
             ),
-            const Icon(Icons.chevron_right, color: Colors.black45),
+            const Icon(Icons.chevron_right, color: Colors.white60),
           ],
         ),
       ),
@@ -220,13 +220,13 @@ class _RubricLibraryScreenState extends State<RubricLibraryScreen> {
       padding: EdgeInsets.symmetric(vertical: 40),
       child: Column(
         children: [
-          Icon(Icons.assignment_outlined, size: 40, color: Colors.black38),
+          Icon(Icons.assignment_outlined, size: 40, color: Colors.white54),
           SizedBox(height: 12),
           Text('لا توجد أوراق تقييم بعد',
               style: TextStyle(fontWeight: FontWeight.bold)),
           SizedBox(height: 4),
           Text('ارفع ورقة تقييم جامعتك للبدء.',
-              style: TextStyle(color: Colors.black54)),
+              style: TextStyle(color: Colors.white70)),
         ],
       ),
     );
@@ -259,11 +259,11 @@ class _RubricLibraryScreenState extends State<RubricLibraryScreen> {
           margin: const EdgeInsets.only(bottom: 8),
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.cardCream,
             borderRadius: BorderRadius.circular(12),
             border: active
                 ? Border.all(color: AppColors.brandPrimary, width: 1.5)
-                : null,
+                : Border.all(color: Colors.white.withValues(alpha: 0.1)),
           ),
           child: Row(
             children: [
@@ -272,11 +272,11 @@ class _RubricLibraryScreenState extends State<RubricLibraryScreen> {
                 height: 42,
                 decoration: BoxDecoration(
                     color: active
-                        ? AppColors.brandPrimary.withValues(alpha: 0.12)
-                        : Colors.grey.withValues(alpha: 0.08),
+                        ? AppColors.brandPrimary.withValues(alpha: 0.2)
+                        : Colors.white.withValues(alpha: 0.08),
                     borderRadius: BorderRadius.circular(10)),
                 child: Icon(active ? Icons.verified : Icons.description_outlined,
-                    color: active ? AppColors.brandPrimary : Colors.black45),
+                    color: active ? AppColors.brandPrimary : Colors.white60),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -310,10 +310,10 @@ class _RubricLibraryScreenState extends State<RubricLibraryScreen> {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                            fontSize: 12, color: Colors.black54)),
+                            fontSize: 12, color: Colors.white70)),
                     Text(DateFormat.yMMMd().add_jm().format(t.createdAt),
                         style: const TextStyle(
-                            fontSize: 11, color: Colors.black38)),
+                            fontSize: 11, color: Colors.white54)),
                   ],
                 ),
               ),

@@ -541,7 +541,7 @@ class _CaseInputScreenState extends State<CaseInputScreen> {
     );
   }
 
-  // ===== معلوومات الطالب =====
+  // ===== معلومات الطالب =====
   Widget _studentInfo() {
     final s = AppStrings(context.watch<AppSettings>().isArabic);
     return CardContainer(

@@ -139,7 +139,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Text(s.aiAnalyzing,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.white70)),
+                style: const TextStyle(color: Colors.black54)),
           ),
         ],
       ),
@@ -161,7 +161,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
               const SizedBox(height: 8),
               Text(_error ?? '',
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white70)),
+                  style: const TextStyle(color: Colors.black54)),
               const SizedBox(height: 16),
               ElevatedButton(
                   onPressed: () {
@@ -231,7 +231,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                             fontSize: 30, fontWeight: FontWeight.bold)),
                     const Text('Overall',
                         style:
-                            TextStyle(fontSize: 12, color: Colors.white70)),
+                            TextStyle(fontSize: 12, color: Colors.black54)),
                   ],
                 ),
               ],
@@ -241,10 +241,10 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.1),
+                color: AppColors.purple.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(100)),
             child: Text('Rubric: ${r.rubricUsed}',
-                style: const TextStyle(fontSize: 12, color: Colors.white70)),
+                style: const TextStyle(fontSize: 12, color: Colors.black54)),
           ),
         ],
       ),
@@ -268,7 +268,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                     style: const TextStyle(fontWeight: FontWeight.bold)),
                 Text(label,
                     style:
-                        const TextStyle(fontSize: 11, color: Colors.white70)),
+                        const TextStyle(fontSize: 11, color: Colors.black54)),
               ],
             ),
           ),
@@ -335,7 +335,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
           ),
           const SizedBox(height: 12),
           Text(feedback,
-              style: const TextStyle(color: Colors.white, height: 1.6)),
+              style: const TextStyle(color: Colors.black87, height: 1.6)),
         ],
       ),
     );
@@ -355,7 +355,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                           const TextStyle(fontWeight: FontWeight.w600))),
               Expanded(
                   child: Text(v,
-                      style: const TextStyle(color: Colors.white70))),
+                      style: const TextStyle(color: Colors.black54))),
             ],
           ),
         );
@@ -520,11 +520,11 @@ class _CriterionRowState extends State<CriterionRow> {
                             fontWeight: FontWeight.bold, color: _color)),
                     Text('/ ${s.maxScore.toStringAsFixed(0)}',
                         style: const TextStyle(
-                            fontSize: 11, color: Colors.white70)),
+                            fontSize: 11, color: Colors.black54)),
                   ],
                 ),
                 Icon(_expanded ? Icons.expand_less : Icons.expand_more,
-                    color: Colors.white60),
+                    color: Colors.black45),
               ],
             ),
           ),
@@ -532,7 +532,7 @@ class _CriterionRowState extends State<CriterionRow> {
             Padding(
               padding: const EdgeInsets.only(top: 10, right: 22, left: 22),
               child: Text(s.feedback!,
-                  style: const TextStyle(fontSize: 13, color: Colors.white70)),
+                  style: const TextStyle(fontSize: 13, color: Colors.black54)),
             ),
         ],
       ),

@@ -148,7 +148,7 @@ class _RubricLibraryScreenState extends State<RubricLibraryScreen> {
                 const SizedBox(height: 8),
                 const Text(
                     'اضغط على ورقة لتفعيلها. اسحب لليمين للحذف، أو استخدم زر النجمة للتعيين كافتراضية.',
-                    style: TextStyle(fontSize: 12, color: Colors.white70)),
+                    style: TextStyle(fontSize: 12, color: Colors.black54)),
               ],
             ],
           ),
@@ -204,11 +204,11 @@ class _RubricLibraryScreenState extends State<RubricLibraryScreen> {
                   Text('رفع ورقة تقييم',
                       style: TextStyle(fontWeight: FontWeight.w500)),
                   Text('PDF, TXT, CSV, JSON',
-                      style: TextStyle(fontSize: 12, color: Colors.white70)),
+                      style: TextStyle(fontSize: 12, color: Colors.black54)),
                 ],
               ),
             ),
-            const Icon(Icons.chevron_right, color: Colors.white60),
+            const Icon(Icons.chevron_right, color: Colors.black45),
           ],
         ),
       ),
@@ -220,13 +220,13 @@ class _RubricLibraryScreenState extends State<RubricLibraryScreen> {
       padding: EdgeInsets.symmetric(vertical: 40),
       child: Column(
         children: [
-          Icon(Icons.assignment_outlined, size: 40, color: Colors.white54),
+          Icon(Icons.assignment_outlined, size: 40, color: Colors.black38),
           SizedBox(height: 12),
           Text('لا توجد أوراق تقييم بعد',
               style: TextStyle(fontWeight: FontWeight.bold)),
           SizedBox(height: 4),
           Text('ارفع ورقة تقييم جامعتك للبدء.',
-              style: TextStyle(color: Colors.white70)),
+              style: TextStyle(color: Colors.black54)),
         ],
       ),
     );
@@ -263,7 +263,7 @@ class _RubricLibraryScreenState extends State<RubricLibraryScreen> {
             borderRadius: BorderRadius.circular(12),
             border: active
                 ? Border.all(color: AppColors.mint, width: 1.5)
-                : Border.all(color: Colors.white.withValues(alpha: 0.1)),
+                : Border.all(color: AppColors.purple.withValues(alpha: 0.15)),
           ),
           child: Row(
             children: [
@@ -273,10 +273,10 @@ class _RubricLibraryScreenState extends State<RubricLibraryScreen> {
                 decoration: BoxDecoration(
                     color: active
                         ? AppColors.mint.withValues(alpha: 0.2)
-                        : Colors.white.withValues(alpha: 0.08),
+                        : AppColors.purple.withValues(alpha: 0.08),
                     borderRadius: BorderRadius.circular(10)),
                 child: Icon(active ? Icons.verified : Icons.description_outlined,
-                    color: active ? AppColors.cyan : Colors.white60),
+                    color: active ? AppColors.cyan : Colors.black45),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -310,10 +310,10 @@ class _RubricLibraryScreenState extends State<RubricLibraryScreen> {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                            fontSize: 12, color: Colors.white70)),
+                            fontSize: 12, color: Colors.black54)),
                     Text(DateFormat.yMMMd().add_jm().format(t.createdAt),
                         style: const TextStyle(
-                            fontSize: 11, color: Colors.white54)),
+                            fontSize: 11, color: Colors.black38)),
                   ],
                 ),
               ),

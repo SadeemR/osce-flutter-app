@@ -232,7 +232,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
                     child: CircularProgressIndicator(strokeWidth: 2)),
                 const SizedBox(width: 8),
                 Text(AppStrings(context.watch<AppSettings>().isArabic).sessionEndedEval,
-                    style: const TextStyle(fontSize: 12, color: Colors.white70)),
+                    style: const TextStyle(fontSize: 12, color: Colors.black54)),
               ],
             ),
           ),
@@ -253,7 +253,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
             child: TextField(
               controller: _input,
               enabled: _sessionActive,
-              style: const TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.black87),
               minLines: 1,
               maxLines: 4,
               textInputAction: TextInputAction.send,
@@ -313,10 +313,10 @@ class MessageBubble extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.1),
+              color: AppColors.purple.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(100)),
           child: Text(message.text,
-              style: const TextStyle(fontSize: 12, color: Colors.white70)),
+              style: const TextStyle(fontSize: 12, color: Colors.black54)),
         ),
       );
     }
@@ -351,7 +351,7 @@ class MessageBubble extends StatelessWidget {
                   color: _isDoctor ? AppColors.cyan.withValues(alpha: 0.4) : AppColors.cyan.withValues(alpha: 0.5), width: 1),
               boxShadow: [
                 BoxShadow(
-                    color: Colors.white.withValues(alpha: 0.05),
+                    color: Colors.black.withValues(alpha: 0.08),
                     blurRadius: 6,
                     offset: const Offset(0, 2)),
               ],
@@ -364,7 +364,7 @@ class MessageBubble extends StatelessWidget {
                         ? TextDirection.rtl
                         : TextDirection.ltr,
                     style: TextStyle(
-                        color: _isDoctor ? Colors.white : Colors.white,
+                        color: _isDoctor ? Colors.white : Colors.black87,
                         height: 1.4),
                   ),
           ),
@@ -372,7 +372,7 @@ class MessageBubble extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4),
             child: Text(DateFormat.jm().format(message.timestamp),
-                style: const TextStyle(fontSize: 11, color: Colors.white54)),
+                style: const TextStyle(fontSize: 11, color: Colors.black38)),
           ),
         ],
       ),

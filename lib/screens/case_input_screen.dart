@@ -65,7 +65,8 @@ class _CaseInputScreenState extends State<CaseInputScreen> {
       setState(() {
         _caseFileName = processed.fileName;
         _caseFileData = processed.rawData;
-        _caseFileText = processed.needsServerParsing ? null : processed.extractedText;
+        _caseFileText =
+            processed.needsServerParsing ? null : processed.extractedText;
         _case.attachedFileName = processed.fileName;
         _case.attachedFileText = processed.extractedText;
       });
@@ -94,67 +95,67 @@ class _CaseInputScreenState extends State<CaseInputScreen> {
     });
   }
 
-Future<void> _submit() async {
-  final settings = context.read<AppSettings>();
-  final session = context.read<SessionManager>();
-  final store = context.read<RubricStore>();
+  Future<void> _submit() async {
+    final settings = context.read<AppSettings>();
+    final session = context.read<SessionManager>();
+    final store = context.read<RubricStore>();
 
-  if (!_isFormValid) {
-    _showError('الرجاء تعبئة حقل واحد على الأقل أو إرفاق ملف.');
-    return;
+    if (!_isFormValid) {
+      _showError('الرجاء تعبئة حقل واحد على الأقل أو إرفاق ملف.');
+      return;
+    }
+
+    _case
+      ..patientInfo = _patient.text
+      ..complaint = _complaint.text
+      ..results = _results.text
+      ..situation = _situation.text
+      ..language = settings.language.code;
+
+    setState(() => _submitting = true);
+    final api = _api();
+
+    try {
+      session.activeRubricTemplate = store.activeTemplate;
+
+      final number = int.tryParse(_studentNumber.text);
+      if (number != null) session.studentNumber = number;
+
+      final prompt = await api.generatePrompt(_case);
+      if (prompt != null) _case.aiGeneratedPrompt = prompt;
+
+      final startResult = await api.updateCase(
+        _case,
+        fileBytes: _caseFileData,
+        fileName: _caseFileName,
+      );
+
+      session.currentCase = _case;
+      session.sessionId = startResult.sessionId;
+      session.caseFileData = _caseFileData;
+      session.caseFileName = _caseFileName;
+
+      session.messages = [
+        ChatMessage(
+          sender: MessageSender.parent,
+          text: startResult.initialMessage,
+        )
+      ];
+
+      session.sessionStartTime = DateTime.now();
+      session.touch();
+
+      if (!mounted) return;
+
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => const PreparationScreen()),
+      );
+    } catch (e) {
+      _showError(e.toString());
+    } finally {
+      if (mounted) setState(() => _submitting = false);
+    }
   }
-
-  _case
-    ..patientInfo = _patient.text
-    ..complaint = _complaint.text
-    ..results = _results.text
-    ..situation = _situation.text
-    ..language = settings.language.code;
-
-  setState(() => _submitting = true);
-  final api = _api();
-
-  try {
-    session.activeRubricTemplate = store.activeTemplate;
-
-    final number = int.tryParse(_studentNumber.text);
-    if (number != null) session.studentNumber = number;
-
-    final prompt = await api.generatePrompt(_case);
-    if (prompt != null) _case.aiGeneratedPrompt = prompt;
-
-    final startResult = await api.updateCase(
-      _case,
-      fileBytes: _caseFileData,
-      fileName: _caseFileName,
-    );
-
-    session.currentCase = _case;
-    session.sessionId = startResult.sessionId;
-    session.caseFileData = _caseFileData;
-    session.caseFileName = _caseFileName;
-
-    session.messages = [
-      ChatMessage(
-        sender: MessageSender.parent,
-        text: startResult.initialMessage,
-      )
-    ];
-
-    session.sessionStartTime = DateTime.now();
-    session.touch();
-
-    if (!mounted) return;
-
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const PreparationScreen()),
-    );
-  } catch (e) {
-    _showError(e.toString());
-  } finally {
-    if (mounted) setState(() => _submitting = false);
-  }
-}
 
   void _showError(String msg) {
     final s = AppStrings(context.read<AppSettings>().isArabic);
@@ -164,8 +165,7 @@ Future<void> _submit() async {
         title: Text(s.errorTitle),
         content: Text(msg),
         actions: [
-          TextButton(
-              onPressed: () => Navigator.pop(context), child: Text(s.ok))
+          TextButton(onPressed: () => Navigator.pop(context), child: Text(s.ok))
         ],
       ),
     );
@@ -218,15 +218,21 @@ Future<void> _submit() async {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(
-                    onPressed: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const RubricLibraryScreen())),
-                    icon: const Icon(Icons.assignment_outlined, color: Colors.white),
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const RubricLibraryScreen())),
+                    icon: const Icon(Icons.assignment_outlined,
+                        color: Colors.white),
                     tooltip: 'أوراق التقييم',
                   ),
                   IconButton(
-                    onPressed: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const SettingsScreen())),
-                    icon: const Icon(Icons.settings_outlined, color: Colors.white),
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const SettingsScreen())),
+                    icon: const Icon(Icons.settings_outlined,
+                        color: Colors.white),
                     tooltip: 'الإعدادات',
                   ),
                 ],
@@ -238,7 +244,8 @@ Future<void> _submit() async {
                 decoration: BoxDecoration(
                   color: Colors.white.withValues(alpha: 0.18),
                   borderRadius: BorderRadius.circular(18),
-                  border: Border.all(color: Colors.white.withValues(alpha: 0.25)),
+                  border:
+                      Border.all(color: Colors.white.withValues(alpha: 0.25)),
                 ),
                 child: const Icon(Icons.medical_services_outlined,
                     color: Colors.white, size: 30),
@@ -252,7 +259,8 @@ Future<void> _submit() async {
               const SizedBox(height: 2),
               Text('Doctor–Patient Communication Platform',
                   style: TextStyle(
-                      color: Colors.white.withValues(alpha: 0.7), fontSize: 13)),
+                      color: Colors.white.withValues(alpha: 0.7),
+                      fontSize: 13)),
               const SizedBox(height: 16),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -330,7 +338,8 @@ Future<void> _submit() async {
                         Text(_caseFileName!,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontWeight: FontWeight.w500)),
+                            style:
+                                const TextStyle(fontWeight: FontWeight.w500)),
                         Text(
                             _caseFileText == null
                                 ? s.serverParsed
@@ -342,7 +351,8 @@ Future<void> _submit() async {
                   ),
                   IconButton(
                     onPressed: _removeCaseFile,
-                    icon: Icon(Icons.cancel, color: Colors.red.withValues(alpha: 0.8)),
+                    icon: Icon(Icons.cancel,
+                        color: Colors.red.withValues(alpha: 0.8)),
                   ),
                 ],
               ),
@@ -395,27 +405,44 @@ Future<void> _submit() async {
           Row(
             children: [
               Text(s.manualInput,
-                  style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14)),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w600, fontSize: 14)),
               const Spacer(),
               Text(s.optionalWithFile,
                   style: const TextStyle(fontSize: 12, color: Colors.black54)),
             ],
           ),
           const SizedBox(height: 14),
-          CaseFormField(label: s.patient, placeholder: s.patientHint, controller: _patient),
+          CaseFormField(
+              label: s.patient,
+              placeholder: s.patientHint,
+              controller: _patient),
           const SizedBox(height: 14),
-          CaseFormField(label: s.complaint, placeholder: s.complaintHint, controller: _complaint, isMultiline: true),
+          CaseFormField(
+              label: s.complaint,
+              placeholder: s.complaintHint,
+              controller: _complaint,
+              isMultiline: true),
           const SizedBox(height: 14),
-          CaseFormField(label: s.results, placeholder: s.resultsHint, controller: _results, isMultiline: true),
+          CaseFormField(
+              label: s.results,
+              placeholder: s.resultsHint,
+              controller: _results,
+              isMultiline: true),
           const SizedBox(height: 14),
-          CaseFormField(label: s.situation, placeholder: s.situationHint, controller: _situation, isMultiline: true),
+          CaseFormField(
+              label: s.situation,
+              placeholder: s.situationHint,
+              controller: _situation,
+              isMultiline: true),
           const SizedBox(height: 8),
           Align(
             alignment: Alignment.centerLeft,
             child: TextButton(
               onPressed: _loadSample,
               child: Text(s.loadSample,
-                  style: const TextStyle(color: AppColors.purple, fontSize: 13)),
+                  style:
+                      const TextStyle(color: AppColors.purple, fontSize: 13)),
             ),
           ),
         ],
@@ -432,7 +459,8 @@ Future<void> _submit() async {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _CardLabel(icon: Icons.assignment_turned_in_outlined, text: s.rubricSheet),
+          _CardLabel(
+              icon: Icons.assignment_turned_in_outlined, text: s.rubricSheet),
           const SizedBox(height: 12),
           if (active != null)
             Container(
@@ -450,7 +478,8 @@ Future<void> _submit() async {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(active.name,
-                            style: const TextStyle(fontWeight: FontWeight.w600)),
+                            style:
+                                const TextStyle(fontWeight: FontWeight.w600)),
                         Text(
                             '${active.criteria.length} · ${active.sourceFileName}',
                             maxLines: 1,
@@ -461,8 +490,10 @@ Future<void> _submit() async {
                     ),
                   ),
                   TextButton(
-                    onPressed: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (_) => const RubricLibraryScreen())),
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const RubricLibraryScreen())),
                     child: Text(s.changeRubric,
                         style: const TextStyle(color: AppColors.purple)),
                   ),
@@ -471,8 +502,10 @@ Future<void> _submit() async {
             )
           else
             InkWell(
-              onTap: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (_) => const RubricLibraryScreen())),
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => const RubricLibraryScreen())),
               borderRadius: BorderRadius.circular(12),
               child: Container(
                 padding: const EdgeInsets.all(14),
@@ -480,11 +513,13 @@ Future<void> _submit() async {
                   color: AppColors.cardCream,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                      color: AppColors.purple.withValues(alpha: 0.8), width: 1.5),
+                      color: AppColors.purple.withValues(alpha: 0.8),
+                      width: 1.5),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.add_circle_outline, color: AppColors.purple),
+                    const Icon(Icons.add_circle_outline,
+                        color: AppColors.purple),
                     const SizedBox(width: 8),
                     Text(s.addRubric,
                         style: const TextStyle(
@@ -506,7 +541,7 @@ Future<void> _submit() async {
     );
   }
 
-  // ===== معلومات الطالب =====
+  // ===== معلوومات الطالب =====
   Widget _studentInfo() {
     final s = AppStrings(context.watch<AppSettings>().isArabic);
     return CardContainer(
@@ -521,7 +556,9 @@ Future<void> _submit() async {
               controller: _studentNumber,
               keyboardType: TextInputType.number,
               textInputAction: TextInputAction.done,
-              onSubmitted: () { if (_isFormValid && !_submitting) _submit(); }),
+              onSubmitted: () {
+                if (_isFormValid && !_submitting) _submit();
+              }),
         ],
       ),
     );

@@ -287,7 +287,7 @@ Future<void> _submit() async {
                                     fontWeight: FontWeight.w500,
                                     fontSize: 14,
                                     color: selected
-                                        ? AppColors.brandPrimary
+                                        ? AppColors.purple
                                         : Colors.white)),
                           ],
                         ),
@@ -316,12 +316,12 @@ Future<void> _submit() async {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppColors.apricot.withValues(alpha: 0.25),
+                color: AppColors.purple.withValues(alpha: 0.5),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
                 children: [
-                  Icon(fileIconFor(_caseFileName!), color: AppColors.apricot),
+                  Icon(fileIconFor(_caseFileName!), color: AppColors.cyan),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Column(
@@ -357,15 +357,15 @@ Future<void> _submit() async {
                   color: AppColors.cardCream,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                      color: AppColors.apricot.withValues(alpha: 0.5), width: 1.5),
+                      color: AppColors.cyan.withValues(alpha: 0.5), width: 1.5),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.upload_file, color: AppColors.apricot),
+                    const Icon(Icons.upload_file, color: AppColors.cyan),
                     const SizedBox(width: 8),
                     Text(s.attachFile,
                         style: const TextStyle(
-                            color: AppColors.apricot,
+                            color: AppColors.cyan,
                             fontWeight: FontWeight.w600)),
                     const Spacer(),
                     const Text('PDF · TXT · CSV · JSON',
@@ -415,7 +415,7 @@ Future<void> _submit() async {
             child: TextButton(
               onPressed: _loadSample,
               child: Text(s.loadSample,
-                  style: const TextStyle(color: AppColors.apricot, fontSize: 13)),
+                  style: const TextStyle(color: AppColors.cyan, fontSize: 13)),
             ),
           ),
         ],
@@ -464,7 +464,7 @@ Future<void> _submit() async {
                     onPressed: () => Navigator.push(context,
                         MaterialPageRoute(builder: (_) => const RubricLibraryScreen())),
                     child: Text(s.changeRubric,
-                        style: const TextStyle(color: AppColors.apricot)),
+                        style: const TextStyle(color: AppColors.mint)),
                   ),
                 ],
               ),
@@ -480,15 +480,15 @@ Future<void> _submit() async {
                   color: AppColors.cardCream,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                      color: AppColors.apricot.withValues(alpha: 0.6), width: 1.5),
+                      color: AppColors.mint.withValues(alpha: 0.6), width: 1.5),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.add_circle_outline, color: AppColors.apricot),
+                    const Icon(Icons.add_circle_outline, color: AppColors.mint),
                     const SizedBox(width: 8),
                     Text(s.addRubric,
                         style: const TextStyle(
-                            color: AppColors.apricot,
+                            color: AppColors.mint,
                             fontWeight: FontWeight.w600)),
                     const Spacer(),
                     const Icon(Icons.chevron_right, color: Colors.white60),
@@ -534,9 +534,9 @@ Future<void> _submit() async {
       child: ElevatedButton(
         onPressed: (_isFormValid && !_submitting) ? _submit : null,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.brandPrimary,
+          backgroundColor: AppColors.lime,
           disabledBackgroundColor: Colors.grey,
-          foregroundColor: Colors.white,
+          foregroundColor: AppColors.purple,
           padding: const EdgeInsets.symmetric(vertical: 16),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
@@ -551,7 +551,7 @@ Future<void> _submit() async {
                         width: 18,
                         height: 18,
                         child: CircularProgressIndicator(
-                            strokeWidth: 2, color: Colors.white)),
+                            strokeWidth: 2, color: AppColors.purple)),
                     const SizedBox(width: 12),
                     Text(s.initializing,
                         style: const TextStyle(
@@ -583,13 +583,13 @@ class _CardLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 20, color: Colors.white),
+        Icon(icon, size: 20, color: AppColors.cyan),
         const SizedBox(width: 8),
         Text(text,
             style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
-                color: Colors.white)),
+                color: AppColors.cyan)),
       ],
     );
   }

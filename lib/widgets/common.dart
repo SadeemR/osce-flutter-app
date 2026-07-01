@@ -88,7 +88,7 @@ class CaseFormField extends StatelessWidget {
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: AppColors.apricot, width: 1.5),
+              borderSide: const BorderSide(color: AppColors.lime, width: 1.5),
             ),
           ),
         ),

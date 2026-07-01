@@ -121,7 +121,7 @@ class _RubricLibraryScreenState extends State<RubricLibraryScreen> {
     final session = context.read<SessionManager>();
 
     return Scaffold(
-      backgroundColor: AppColors.offWhiteCream,
+      backgroundColor: AppColors.purpleDeep,
       appBar: AppBar(
         title: const Text('Evaluation Rubrics'),
         actions: [
@@ -142,7 +142,7 @@ class _RubricLibraryScreenState extends State<RubricLibraryScreen> {
                 const Text('أوراق التقييم المحفوظة',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: AppColors.burgundy)),
+                        color: AppColors.cyan)),
                 const SizedBox(height: 8),
                 ...store.templates.map((t) => _rubricRow(t, store, session)),
                 const SizedBox(height: 8),
@@ -192,9 +192,9 @@ class _RubricLibraryScreenState extends State<RubricLibraryScreen> {
               width: 42,
               height: 42,
               decoration: BoxDecoration(
-                  color: AppColors.brandPrimary.withValues(alpha: 0.1),
+                  color: AppColors.cyan.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(10)),
-              child: const Icon(Icons.upload_file, color: AppColors.apricot),
+              child: const Icon(Icons.upload_file, color: AppColors.cyan),
             ),
             const SizedBox(width: 14),
             const Expanded(
@@ -262,7 +262,7 @@ class _RubricLibraryScreenState extends State<RubricLibraryScreen> {
             color: AppColors.cardCream,
             borderRadius: BorderRadius.circular(12),
             border: active
-                ? Border.all(color: AppColors.brandPrimary, width: 1.5)
+                ? Border.all(color: AppColors.mint, width: 1.5)
                 : Border.all(color: Colors.white.withValues(alpha: 0.1)),
           ),
           child: Row(
@@ -272,11 +272,11 @@ class _RubricLibraryScreenState extends State<RubricLibraryScreen> {
                 height: 42,
                 decoration: BoxDecoration(
                     color: active
-                        ? AppColors.brandPrimary.withValues(alpha: 0.2)
+                        ? AppColors.mint.withValues(alpha: 0.2)
                         : Colors.white.withValues(alpha: 0.08),
                     borderRadius: BorderRadius.circular(10)),
                 child: Icon(active ? Icons.verified : Icons.description_outlined,
-                    color: active ? AppColors.brandPrimary : Colors.white60),
+                    color: active ? AppColors.cyan : Colors.white60),
               ),
               const SizedBox(width: 12),
               Expanded(
@@ -295,13 +295,13 @@ class _RubricLibraryScreenState extends State<RubricLibraryScreen> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 6, vertical: 2),
                             decoration: BoxDecoration(
-                                color: AppColors.apricotLight,
+                                color: AppColors.purple,
                                 borderRadius: BorderRadius.circular(100)),
                             child: const Text('DEFAULT',
                                 style: TextStyle(
                                     fontSize: 10,
                                     fontWeight: FontWeight.bold,
-                                    color: AppColors.apricot)),
+                                    color: AppColors.lime)),
                           ),
                         ],
                       ],
@@ -321,11 +321,11 @@ class _RubricLibraryScreenState extends State<RubricLibraryScreen> {
                 IconButton(
                   tooltip: 'تعيين كافتراضية',
                   onPressed: () => store.setDefault(t),
-                  icon: const Icon(Icons.star_outline, color: AppColors.apricot),
+                  icon: const Icon(Icons.star_outline, color: AppColors.cyan),
                 ),
               if (active)
                 const Icon(Icons.radio_button_checked,
-                    color: AppColors.brandPrimary),
+                    color: AppColors.mint),
             ],
           ),
         ),

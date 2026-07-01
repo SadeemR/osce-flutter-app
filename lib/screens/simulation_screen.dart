@@ -127,10 +127,10 @@ class _SimulationScreenState extends State<SimulationScreen> {
   Widget build(BuildContext context) {
     final session = context.watch<SessionManager>();
     return Scaffold(
-      backgroundColor: AppColors.offWhiteCream,
+      backgroundColor: AppColors.purpleDeep,
       appBar: AppBar(
         title: Text(AppStrings(context.watch<AppSettings>().isArabic).osceSimulation),
-        backgroundColor: AppColors.offWhiteCream,
+        backgroundColor: AppColors.purpleDeep,
         automaticallyImplyLeading: false,
       ),
       body: SafeArea(
@@ -243,8 +243,8 @@ class _SimulationScreenState extends State<SimulationScreen> {
   Widget _inputBar() {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.cardCream,
-        border: Border(top: BorderSide(color: Colors.white.withValues(alpha: 0.15))),
+        color: AppColors.purpleDark,
+        border: Border(top: BorderSide(color: AppColors.cyan.withValues(alpha: 0.3))),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Row(
@@ -261,7 +261,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
               decoration: InputDecoration(
                 hintText: AppStrings(context.watch<AppSettings>().isArabic).typeResponse,
                 filled: true,
-                fillColor: AppColors.cardCream,
+                fillColor: AppColors.purpleDark,
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 border: OutlineInputBorder(
@@ -277,7 +277,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
               width: 42,
               height: 42,
               decoration: BoxDecoration(
-                color: _isSendDisabled ? Colors.grey : AppColors.brandPrimary,
+                color: _isSendDisabled ? Colors.grey.shade800 : AppColors.lime,
                 shape: BoxShape.circle,
               ),
               child: _waitingForReply
@@ -286,7 +286,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
                       child: CircularProgressIndicator(
                           strokeWidth: 2, color: Colors.white),
                     )
-                  : const Icon(Icons.send, color: Colors.white, size: 18),
+                  : const Icon(Icons.send, color: AppColors.purple, size: 18),
             ),
           ),
         ],
@@ -334,8 +334,8 @@ class MessageBubble extends StatelessWidget {
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
                     color: _isDoctor
-                        ? AppColors.brandPrimary
-                        : AppColors.apricot)),
+                        ? AppColors.cyan
+                        : AppColors.mint)),
           ),
           const SizedBox(height: 4),
           Container(
@@ -344,11 +344,11 @@ class MessageBubble extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
               color: _isDoctor
-                  ? AppColors.apricot.withValues(alpha: 0.3)
-                  : AppColors.apricot.withValues(alpha: 0.15),
+                  ? AppColors.purple
+                  : AppColors.purpleDark,
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
-                  color: AppColors.apricot.withValues(alpha: 0.5), width: 1),
+                  color: _isDoctor ? AppColors.cyan.withValues(alpha: 0.4) : AppColors.cyan.withValues(alpha: 0.5), width: 1),
               boxShadow: [
                 BoxShadow(
                     color: Colors.white.withValues(alpha: 0.05),

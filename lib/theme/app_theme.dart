@@ -1,36 +1,46 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const burgundy = Color(0xFFCC0033);
-  static const burgundyLight = Color(0xFFEE1144);
-  static const burgundyMid = Color(0xFFFF3355);
-  static const apricot = Color(0xFFFF6600);
-  static const apricotLight = Color(0xFFFF8833);
-  static const apricotPale = Color(0xFFFF4400);
+  static const cyan = Color(0xFF29E7F5);
+  static const mint = Color(0xFF25FCC3);
+  static const lime = Color(0xFFC3FC25);
+  static const purple = Color(0xFF7C1D93);
 
-  static const brandPrimary = burgundy;
-  static const brandAccent = apricot;
-  static const brandSurface = Color(0xFF2A0A12);
+  // Light cyan + mint backgrounds
+  static const purpleDeep = Color(0xFFCFFAF5);
+  static const purpleDark = Color(0xFFB2F5EC);
+  static const purpleMid = Color(0xFF9B35B0);
 
-  // Dark backgrounds111
-  static const burgundyBackground = Color(0xFF120308);
-  static const offWhiteCream = Color(0xFF1A0510);
-  static const cardCream = Color(0xFF2A0A18);
+  // Aliases
+  static const burgundy = purple;
+  static const burgundyLight = Color(0xFF9B35B0);
+  static const burgundyMid = mint;
+  static const apricot = cyan;
+  static const apricotLight = mint;
+  static const apricotPale = Color(0xFFD0FAF8);
+
+  static const brandPrimary = purple;
+  static const brandAccent = cyan;
+  static const brandSurface = purpleDark;
+
+  static const burgundyBackground = purpleDeep;
+  static const offWhiteCream = purpleDeep;
+  static const cardCream = purpleDark;
 
   static const heroGradient = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      Color(0xFF0A0205),
-      Color(0xFF3D0815),
-      Color(0xFF7A0F28),
-      Color(0xFFBB2020),
-      Color(0xFFFF6600),
+      Color(0xFF4A0A6B),
+      Color(0xFF7C1D93),
+      Color(0xFF29B8C5),
+      Color(0xFF29E7F5),
+      Color(0xFF25FCC3),
     ],
   );
 
-  static const ratingGreen = Color(0xFF00DD66);
-  static const ratingBlue = brandPrimary;
-  static const ratingOrange = apricot;
-  static const ratingRed = Color(0xFFFF2200);
+  static const ratingGreen = mint;
+  static const ratingBlue = cyan;
+  static const ratingOrange = lime;
+  static const ratingRed = Color(0xFFFF2D6B);
 }

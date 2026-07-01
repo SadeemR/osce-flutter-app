@@ -2,17 +2,16 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum AppLanguage {
-  english('en', 'English', '🇬🇧'),
-  arabic('ar', 'العربية', '🇸🇦');
+  english('en', 'English', ''),
+  arabic('ar', 'العربية', '');
 
   const AppLanguage(this.code, this.displayName, this.flag);
   final String code;
   final String displayName;
   final String flag;
 
-  static AppLanguage fromCode(String code) =>
-      AppLanguage.values.firstWhere((l) => l.code == code,
-          orElse: () => AppLanguage.english);
+  static AppLanguage fromCode(String code) => AppLanguage.values
+      .firstWhere((l) => l.code == code, orElse: () => AppLanguage.english);
 }
 
 class AppSettings extends ChangeNotifier {

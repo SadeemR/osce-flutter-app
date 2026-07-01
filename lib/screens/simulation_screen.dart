@@ -127,10 +127,10 @@ class _SimulationScreenState extends State<SimulationScreen> {
   Widget build(BuildContext context) {
     final session = context.watch<SessionManager>();
     return Scaffold(
-      backgroundColor: AppColors.offWhiteCream,
+      backgroundColor: AppColors.purpleDeep,
       appBar: AppBar(
         title: Text(AppStrings(context.watch<AppSettings>().isArabic).osceSimulation),
-        backgroundColor: AppColors.offWhiteCream,
+        backgroundColor: AppColors.purpleDeep,
         automaticallyImplyLeading: false,
       ),
       body: SafeArea(
@@ -232,7 +232,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
                     child: CircularProgressIndicator(strokeWidth: 2)),
                 const SizedBox(width: 8),
                 Text(AppStrings(context.watch<AppSettings>().isArabic).sessionEndedEval,
-                    style: const TextStyle(fontSize: 12, color: Colors.white70)),
+                    style: const TextStyle(fontSize: 12, color: Colors.black54)),
               ],
             ),
           ),
@@ -243,8 +243,8 @@ class _SimulationScreenState extends State<SimulationScreen> {
   Widget _inputBar() {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.cardCream,
-        border: Border(top: BorderSide(color: Colors.white.withValues(alpha: 0.15))),
+        color: AppColors.purpleDark,
+        border: Border(top: BorderSide(color: AppColors.cyan.withValues(alpha: 0.3))),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       child: Row(
@@ -253,7 +253,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
             child: TextField(
               controller: _input,
               enabled: _sessionActive,
-              style: const TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.black87),
               minLines: 1,
               maxLines: 4,
               textInputAction: TextInputAction.send,
@@ -261,7 +261,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
               decoration: InputDecoration(
                 hintText: AppStrings(context.watch<AppSettings>().isArabic).typeResponse,
                 filled: true,
-                fillColor: AppColors.cardCream,
+                fillColor: AppColors.purpleDark,
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                 border: OutlineInputBorder(
@@ -277,7 +277,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
               width: 42,
               height: 42,
               decoration: BoxDecoration(
-                color: _isSendDisabled ? Colors.grey : AppColors.brandPrimary,
+                color: _isSendDisabled ? Colors.grey.shade800 : AppColors.lime,
                 shape: BoxShape.circle,
               ),
               child: _waitingForReply
@@ -286,7 +286,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
                       child: CircularProgressIndicator(
                           strokeWidth: 2, color: Colors.white),
                     )
-                  : const Icon(Icons.send, color: Colors.white, size: 18),
+                  : const Icon(Icons.send, color: AppColors.purple, size: 18),
             ),
           ),
         ],
@@ -313,10 +313,10 @@ class MessageBubble extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
-              color: Colors.white.withValues(alpha: 0.1),
+              color: AppColors.purple.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(100)),
           child: Text(message.text,
-              style: const TextStyle(fontSize: 12, color: Colors.white70)),
+              style: const TextStyle(fontSize: 12, color: Colors.black54)),
         ),
       );
     }
@@ -334,8 +334,8 @@ class MessageBubble extends StatelessWidget {
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
                     color: _isDoctor
-                        ? AppColors.brandPrimary
-                        : AppColors.apricot)),
+                        ? AppColors.cyan
+                        : AppColors.mint)),
           ),
           const SizedBox(height: 4),
           Container(
@@ -343,14 +343,15 @@ class MessageBubble extends StatelessWidget {
                 maxWidth: MediaQuery.of(context).size.width - 80),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
-              color: _isDoctor ? AppColors.brandPrimary : AppColors.apricotPale,
+              color: _isDoctor
+                  ? AppColors.purple
+                  : AppColors.purpleDark,
               borderRadius: BorderRadius.circular(16),
-              border: _isDoctor
-                  ? null
-                  : Border.all(color: AppColors.apricot.withValues(alpha: 0.4), width: 1),
+              border: Border.all(
+                  color: _isDoctor ? AppColors.cyan.withValues(alpha: 0.4) : AppColors.cyan.withValues(alpha: 0.5), width: 1),
               boxShadow: [
                 BoxShadow(
-                    color: Colors.white.withValues(alpha: 0.05),
+                    color: Colors.black.withValues(alpha: 0.08),
                     blurRadius: 6,
                     offset: const Offset(0, 2)),
               ],
@@ -363,7 +364,7 @@ class MessageBubble extends StatelessWidget {
                         ? TextDirection.rtl
                         : TextDirection.ltr,
                     style: TextStyle(
-                        color: _isDoctor ? Colors.white : Colors.white,
+                        color: _isDoctor ? Colors.white : Colors.black87,
                         height: 1.4),
                   ),
           ),
@@ -371,7 +372,7 @@ class MessageBubble extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 4),
             child: Text(DateFormat.jm().format(message.timestamp),
-                style: const TextStyle(fontSize: 11, color: Colors.white54)),
+                style: const TextStyle(fontSize: 11, color: Colors.black38)),
           ),
         ],
       ),

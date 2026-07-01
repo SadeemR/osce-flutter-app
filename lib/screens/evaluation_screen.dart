@@ -67,7 +67,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
       case 'Excellent':
         return AppColors.ratingGreen;
       case 'Good':
-        return AppColors.brandPrimary;
+        return AppColors.cyan;
       case 'Average':
         return AppColors.apricot;
       default:
@@ -100,9 +100,9 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
     final result = session.evaluationResult;
 
     return Scaffold(
-      backgroundColor: AppColors.offWhiteCream,
+      backgroundColor: AppColors.purpleDeep,
       appBar: AppBar(
-        backgroundColor: AppColors.offWhiteCream,
+        backgroundColor: AppColors.purpleDeep,
         automaticallyImplyLeading: false,
         title: Text(AppStrings(context.watch<AppSettings>().isArabic).evaluationResults),
         actions: [
@@ -139,7 +139,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: Text(s.aiAnalyzing,
                 textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.white70)),
+                style: const TextStyle(color: Colors.black54)),
           ),
         ],
       ),
@@ -153,7 +153,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Icon(Icons.warning_amber_rounded,
-                  size: 48, color: AppColors.apricot),
+                  size: 48, color: AppColors.lime),
               const SizedBox(height: 12),
               Text(AppStrings(context.read<AppSettings>().isArabic).failedToLoad,
                   style:
@@ -161,7 +161,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
               const SizedBox(height: 8),
               Text(_error ?? '',
                   textAlign: TextAlign.center,
-                  style: const TextStyle(color: Colors.white70)),
+                  style: const TextStyle(color: Colors.black54)),
               const SizedBox(height: 16),
               ElevatedButton(
                   onPressed: () {
@@ -231,7 +231,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                             fontSize: 30, fontWeight: FontWeight.bold)),
                     const Text('Overall',
                         style:
-                            TextStyle(fontSize: 12, color: Colors.white70)),
+                            TextStyle(fontSize: 12, color: Colors.black54)),
                   ],
                 ),
               ],
@@ -241,10 +241,10 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
             decoration: BoxDecoration(
-                color: Colors.white.withValues(alpha: 0.1),
+                color: AppColors.purple.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(100)),
             child: Text('Rubric: ${r.rubricUsed}',
-                style: const TextStyle(fontSize: 12, color: Colors.white70)),
+                style: const TextStyle(fontSize: 12, color: Colors.black54)),
           ),
         ],
       ),
@@ -258,8 +258,9 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
             margin: const EdgeInsets.symmetric(horizontal: 4),
             padding: const EdgeInsets.symmetric(vertical: 12),
             decoration: BoxDecoration(
-                color: color.withValues(alpha: 0.08),
-                borderRadius: BorderRadius.circular(12)),
+                color: color.withValues(alpha: 0.35),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: color, width: 1.5)),
             child: Column(
               children: [
                 Icon(i, color: color),
@@ -268,7 +269,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                     style: const TextStyle(fontWeight: FontWeight.bold)),
                 Text(label,
                     style:
-                        const TextStyle(fontSize: 11, color: Colors.white70)),
+                        const TextStyle(fontSize: 11, color: Colors.black54)),
               ],
             ),
           ),
@@ -279,10 +280,10 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
       child: Row(
         children: [
           chip(Icons.assignment_outlined, 'Criteria', '${r.scores.length}',
-              AppColors.brandPrimary),
-          chip(Icons.timer_outlined, 'Duration', _duration(s), AppColors.apricot),
+              AppColors.cyan),
+          chip(Icons.timer_outlined, 'Duration', _duration(s), AppColors.mint),
           chip(Icons.chat_bubble_outline, 'Messages',
-              '${s.doctorMessages.length}', AppColors.burgundyMid),
+              '${s.doctorMessages.length}', AppColors.lime),
         ],
       ),
     );
@@ -296,7 +297,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
         children: [
           Row(
             children: [
-              const Icon(Icons.bar_chart, color: AppColors.burgundy),
+              const Icon(Icons.bar_chart, color: AppColors.purple),
               const SizedBox(width: 8),
               Text(AppStrings(context.read<AppSettings>().isArabic).evaluationCriteria,
                   style:
@@ -315,27 +316,27 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.apricotPale,
+        color: AppColors.purpleDark,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.apricot.withValues(alpha: 0.4)),
+        border: Border.all(color: AppColors.cyan.withValues(alpha: 0.4)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              const Icon(Icons.chat_bubble_outline, color: AppColors.brandPrimary),
+              const Icon(Icons.chat_bubble_outline, color: AppColors.purple),
               const SizedBox(width: 8),
               Text(AppStrings(context.read<AppSettings>().isArabic).aiFeedback,
                   style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
-                      color: AppColors.brandPrimary)),
+                      color: AppColors.purple)),
             ],
           ),
           const SizedBox(height: 12),
           Text(feedback,
-              style: const TextStyle(color: Colors.white, height: 1.6)),
+              style: const TextStyle(color: Colors.black87, height: 1.6)),
         ],
       ),
     );
@@ -355,7 +356,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                           const TextStyle(fontWeight: FontWeight.w600))),
               Expanded(
                   child: Text(v,
-                      style: const TextStyle(color: Colors.white70))),
+                      style: const TextStyle(color: Colors.black54))),
             ],
           ),
         );
@@ -365,7 +366,7 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
         children: [
           Row(
             children: [
-              const Icon(Icons.description_outlined, color: AppColors.burgundy),
+              const Icon(Icons.description_outlined, color: AppColors.purple),
               const SizedBox(width: 8),
               Text(AppStrings(context.read<AppSettings>().isArabic).sessionSummary,
                   style:
@@ -398,8 +399,8 @@ class _EvaluationScreenState extends State<EvaluationScreen> {
                   (route) => false);
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.brandPrimary,
-              foregroundColor: Colors.white,
+              backgroundColor: AppColors.lime,
+              foregroundColor: AppColors.purple,
               padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(14)),
@@ -445,9 +446,9 @@ class _CriterionRowState extends State<CriterionRow> {
       case 'green':
         return AppColors.ratingGreen;
       case 'blue':
-        return AppColors.brandPrimary;
+        return AppColors.cyan;
       case 'orange':
-        return AppColors.apricot;
+        return AppColors.lime;
       default:
         return AppColors.ratingRed;
     }
@@ -487,13 +488,13 @@ class _CriterionRowState extends State<CriterionRow> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 5, vertical: 2),
                               decoration: BoxDecoration(
-                                  color: AppColors.apricotLight,
+                                  color: AppColors.purple,
                                   borderRadius: BorderRadius.circular(100)),
                               child: Text('×${s.weight.toStringAsFixed(0)}',
                                   style: const TextStyle(
                                       fontSize: 11,
                                       fontWeight: FontWeight.bold,
-                                      color: AppColors.apricot)),
+                                      color: AppColors.lime)),
                             ),
                           ],
                         ],
@@ -520,11 +521,11 @@ class _CriterionRowState extends State<CriterionRow> {
                             fontWeight: FontWeight.bold, color: _color)),
                     Text('/ ${s.maxScore.toStringAsFixed(0)}',
                         style: const TextStyle(
-                            fontSize: 11, color: Colors.white70)),
+                            fontSize: 11, color: Colors.black54)),
                   ],
                 ),
                 Icon(_expanded ? Icons.expand_less : Icons.expand_more,
-                    color: Colors.white60),
+                    color: Colors.black45),
               ],
             ),
           ),
@@ -532,7 +533,7 @@ class _CriterionRowState extends State<CriterionRow> {
             Padding(
               padding: const EdgeInsets.only(top: 10, right: 22, left: 22),
               child: Text(s.feedback!,
-                  style: const TextStyle(fontSize: 13, color: Colors.white70)),
+                  style: const TextStyle(fontSize: 13, color: Colors.black54)),
             ),
         ],
       ),

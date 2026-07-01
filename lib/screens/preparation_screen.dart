@@ -67,10 +67,10 @@ class _PreparationScreenState extends State<PreparationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.offWhiteCream,
+      backgroundColor: AppColors.purpleDeep,
       appBar: AppBar(
         title: Text(AppStrings(context.watch<AppSettings>().isArabic).preparationPhase),
-        backgroundColor: AppColors.offWhiteCream,
+        backgroundColor: AppColors.purpleDeep,
         automaticallyImplyLeading: false,
       ),
       body: SafeArea(
@@ -99,13 +99,13 @@ class _PreparationScreenState extends State<PreparationScreen> {
         children: [
           Row(
             children: [
-              const Icon(Icons.description, color: AppColors.apricot),
+              const Icon(Icons.description, color: AppColors.purple),
               const SizedBox(width: 8),
               Text(s.caseInformation,
                   style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
-                      color: AppColors.apricot)),
+                      color: AppColors.purple)),
             ],
           ),
           const Divider(height: 20),
@@ -123,13 +123,13 @@ class _PreparationScreenState extends State<PreparationScreen> {
           Row(
             children: [
               const Icon(Icons.format_list_numbered,
-                  size: 18, color: AppColors.brandPrimary),
+                  size: 18, color: AppColors.purple),
               const SizedBox(width: 8),
               Expanded(
                 child: Text(s.requiredTasks,
                     style: const TextStyle(
                         fontWeight: FontWeight.w600,
-                        color: AppColors.brandPrimary)),
+                        color: AppColors.purple)),
               ),
             ],
           ),
@@ -141,7 +141,7 @@ class _PreparationScreenState extends State<PreparationScreen> {
               style: const TextStyle(
                   fontSize: 12,
                   fontStyle: FontStyle.italic,
-                  color: Colors.white70)),
+                  color: Colors.black54)),
         ],
       ),
     );
@@ -237,7 +237,7 @@ class _InfoRow extends StatelessWidget {
           const SizedBox(width: 6),
           Expanded(
             child: Text(value,
-                style: const TextStyle(color: Colors.white70)),
+                style: const TextStyle(color: Colors.black54)),
           ),
         ],
       ),

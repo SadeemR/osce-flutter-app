@@ -17,7 +17,7 @@ class SettingsScreen extends StatelessWidget {
     final settings = context.watch<AppSettings>();
 
     return Scaffold(
-      backgroundColor: AppColors.offWhiteCream,
+      backgroundColor: AppColors.purpleDeep,
       appBar: AppBar(title: const Text('Settings')),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -32,7 +32,7 @@ class SettingsScreen extends StatelessWidget {
                 max: 180,
                 divisions: (180 - 30) ~/ 15,
                 display: '${settings.preparationTime} ثانية',
-                color: AppColors.brandPrimary,
+                color: AppColors.purple,
                 onChanged: (v) => settings.setPreparationTime(v.round()),
               ),
               const SizedBox(height: 12),
@@ -43,7 +43,7 @@ class SettingsScreen extends StatelessWidget {
                 max: 600,
                 divisions: (600 - 120) ~/ 60,
                 display: _formattedSim(settings.simulationTime),
-                color: AppColors.apricot,
+                color: AppColors.purple,
                 onChanged: (v) => settings.setSimulationTime(v.round()),
               ),
             ],
@@ -62,20 +62,20 @@ class SettingsScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(
                       color: selected
-                          ? AppColors.brandPrimary
+                          ? AppColors.cyan
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
                           color: selected
-                              ? AppColors.brandPrimary
-                              : Colors.white.withValues(alpha: 0.2)),
+                              ? AppColors.cyan
+                              : AppColors.purple.withValues(alpha: 0.3)),
                     ),
                     child: Center(
                       child: Text('${lang.flag} ${lang.displayName}',
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
                               color:
-                                  selected ? Colors.white : AppColors.burgundy)),
+                                  selected ? AppColors.purple : Colors.black54)),
                     ),
                   ),
                 ),
@@ -110,7 +110,7 @@ class SettingsScreen extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 8, right: 4),
         child: Text(t,
             style: const TextStyle(
-                fontWeight: FontWeight.bold, color: AppColors.burgundy)),
+                fontWeight: FontWeight.bold, color: AppColors.purple)),
       );
 
   Widget _card(Widget child) => Container(
@@ -138,7 +138,7 @@ class SettingsScreen extends StatelessWidget {
           children: [
             Text(label),
             const Spacer(),
-            Text(display, style: const TextStyle(color: Colors.white70)),
+            Text(display, style: const TextStyle(color: Colors.black54)),
           ],
         ),
         Slider(
@@ -159,7 +159,7 @@ class SettingsScreen extends StatelessWidget {
           children: [
             Text(l, style: const TextStyle(fontWeight: FontWeight.w500)),
             const Spacer(),
-            Text(v, style: const TextStyle(color: Colors.white70)),
+            Text(v, style: const TextStyle(color: Colors.black54)),
           ],
         ),
       );
@@ -185,13 +185,13 @@ class PrivacyPolicyScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold, fontSize: 16)),
               const SizedBox(height: 8),
               Text(body,
-                  style: const TextStyle(color: Colors.white70, height: 1.6)),
+                  style: const TextStyle(color: Colors.black54, height: 1.6)),
             ],
           ),
         );
 
     return Scaffold(
-      backgroundColor: AppColors.offWhiteCream,
+      backgroundColor: AppColors.purpleDeep,
       appBar: AppBar(title: const Text('Privacy Policy')),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -200,7 +200,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
           const SizedBox(height: 4),
           const Text('آخر تحديث: مايو 2026',
-              style: TextStyle(fontSize: 12, color: Colors.white60)),
+              style: TextStyle(fontSize: 12, color: Colors.black45)),
           const SizedBox(height: 16),
           section('البيانات التي نجمعها',
               'نجمع رقم الطالب، الدرجات، ونصوص المحادثات أثناء محاكاة OSCE.'),

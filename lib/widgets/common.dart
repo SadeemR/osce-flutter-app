@@ -17,7 +17,7 @@ class CardContainer extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.white.withValues(alpha: 0.05),
+            color: Colors.black.withValues(alpha: 0.08),
             blurRadius: 6,
             offset: const Offset(0, 2),
           ),
@@ -59,11 +59,11 @@ class CaseFormField extends StatelessWidget {
               style: const TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
-                  color: AppColors.burgundy)),
+                  color: Colors.black87)),
         ),
         TextField(
           controller: controller,
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.black87),
           minLines: isMultiline ? 2 : 1,
           maxLines: isMultiline ? 5 : 1,
           keyboardType: keyboardType ??
@@ -73,22 +73,22 @@ class CaseFormField extends StatelessWidget {
           onSubmitted: onSubmitted != null ? (_) => onSubmitted!() : null,
           decoration: InputDecoration(
             hintText: placeholder,
-            hintStyle: const TextStyle(fontSize: 13, color: Colors.white38),
+            hintStyle: const TextStyle(fontSize: 13, color: Colors.black45),
             filled: true,
             fillColor: AppColors.cardCream,
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.15)),
+              borderSide: BorderSide(color: AppColors.purple.withValues(alpha: 0.3)),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.15)),
+              borderSide: BorderSide(color: AppColors.purple.withValues(alpha: 0.3)),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: AppColors.apricot, width: 1.5),
+              borderSide: const BorderSide(color: AppColors.lime, width: 1.5),
             ),
           ),
         ),

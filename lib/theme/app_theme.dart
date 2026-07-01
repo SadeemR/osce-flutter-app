@@ -12,7 +12,7 @@ class AppColors {
   static const brandAccent = apricot;
   static const brandSurface = Color(0xFF2A0A12);
 
-  // Dark backgrounds
+  // Dark backgrounds111
   static const burgundyBackground = Color(0xFF120308);
   static const offWhiteCream = Color(0xFF1A0510);
   static const cardCream = Color(0xFF2A0A18);

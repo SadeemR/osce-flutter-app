@@ -4,7 +4,8 @@
       "Bash(flutter analyze *)",
       "Read(//private/tmp/**)",
       "Bash(unzip -o \"/Users/sadeem./Downloads/osce_backend1.zip\" -d osce_backend)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Bash(git -C /Users/sadeem./Projects/osce_flutter/.claude/worktrees/clever-roentgen-c48099 log --oneline origin/main..HEAD)"
     ]
   }
 }

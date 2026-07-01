@@ -59,7 +59,7 @@ class CaseFormField extends StatelessWidget {
               style: const TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
-                  color: AppColors.burgundy)),
+                  color: Colors.white)),
         ),
         TextField(
           controller: controller,

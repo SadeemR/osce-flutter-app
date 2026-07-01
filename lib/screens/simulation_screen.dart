@@ -343,11 +343,12 @@ class MessageBubble extends StatelessWidget {
                 maxWidth: MediaQuery.of(context).size.width - 80),
             padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             decoration: BoxDecoration(
-              color: _isDoctor ? AppColors.brandPrimary : AppColors.apricotPale,
+              color: _isDoctor
+                  ? AppColors.apricot.withValues(alpha: 0.3)
+                  : AppColors.apricot.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(16),
-              border: _isDoctor
-                  ? null
-                  : Border.all(color: AppColors.apricot.withValues(alpha: 0.4), width: 1),
+              border: Border.all(
+                  color: AppColors.apricot.withValues(alpha: 0.5), width: 1),
               boxShadow: [
                 BoxShadow(
                     color: Colors.white.withValues(alpha: 0.05),

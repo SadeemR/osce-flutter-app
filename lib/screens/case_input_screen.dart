@@ -316,7 +316,7 @@ Future<void> _submit() async {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: AppColors.apricotPale,
+                color: AppColors.apricot.withValues(alpha: 0.25),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
@@ -583,13 +583,13 @@ class _CardLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, size: 20, color: AppColors.burgundy),
+        Icon(icon, size: 20, color: Colors.white),
         const SizedBox(width: 8),
         Text(text,
             style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
-                color: AppColors.burgundy)),
+                color: Colors.white)),
       ],
     );
   }

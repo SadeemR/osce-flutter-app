@@ -3,6 +3,22 @@ class AppStrings {
   const AppStrings(this.isArabic);
 
   // ===== Case Input Screen =====
+  String get stationType => isArabic ? 'نوع المحطة' : 'Station Type';
+  String get stationBadNews => isArabic ? 'خبر سيئ' : 'Bad News';
+  String get stationHistory => isArabic ? 'تاريخ مرضي' : 'History Taking';
+  String get stationBadNewsHint => isArabic
+      ? 'المريض ينتظر التشخيص، والطالب يوصل الخبر بتعاطف.'
+      : 'The patient awaits a diagnosis; the student breaks the news with empathy.';
+  String get stationHistoryHint => isArabic
+      ? 'المريض يبدأ بالشكوى فقط، ويكشف التفاصيل إذا انسأل.'
+      : 'The patient opens with the complaint only and reveals details when asked.';
+  String get hiddenInfo => isArabic ? 'معلومات سرية للمريض' : 'Hidden Patient Details';
+  String get hiddenInfoHint => isArabic
+      ? 'مثال: الكحة تبدأ خلال 24 ساعة من الدوام، يتعرض لغبار ولا يلبس كمامة…'
+      : 'Example: Cough starts within 24h of work, exposed to dust, no mask…';
+  String get hiddenInfoNote => isArabic
+      ? 'لا تظهر للطالب. المريض يكشفها فقط إذا انسأل.'
+      : 'Not shown to the student. The patient reveals them only when asked.';
   String get caseFile => isArabic ? 'ملف الحالة' : 'Case File';
   String get attachFile => isArabic ? 'إرفاق ملف الحالة' : 'Attach Case File';
   String get fileFormats => isArabic ? 'PDF · TXT · CSV · JSON' : 'PDF · TXT · CSV · JSON';
@@ -54,12 +70,18 @@ class AppStrings {
   String get task2 => isArabic
       ? '٢. اشرح خطة العلاج وأجب على الأسئلة.'
       : "2. Explain management and answer the parent's questions.";
+  String get task1History => isArabic
+      ? '١. خذ تاريخًا مرضيًا كاملًا من المريض.'
+      : '1. Take a full history from the patient.';
+  String get task2History => isArabic
+      ? '٢. أجب على أسئلة المريض وضع خطة مناسبة.'
+      : "2. Respond to the patient's questions and outline a plan.";
   String get prepNote => isArabic
       ? 'لديك دقيقة واحدة للتحضير قبل بدء الجلسة.'
       : 'You have one minute to prepare before the session begins.';
   String get preparationTime => isArabic ? 'وقت التحضير' : 'Preparation Time';
   String get preparationPhaseLabel => isArabic ? 'مرحلة التحضير' : 'Preparation Phase';
-  String get skip => isArabic ? 'تخطي ⏭' : 'Skip ⏭';
+  String get skip => isArabic ? 'تخطي' : 'Skip';
 
   // ===== Simulation Screen =====
   String get osceSimulation => isArabic ? 'محاكاة OSCE' : 'OSCE Simulation';

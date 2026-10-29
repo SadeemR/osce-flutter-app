@@ -8,6 +8,7 @@ import '../models/chat_message.dart';
 import '../services/api_service.dart';
 import '../state/session_manager.dart';
 import '../theme/app_theme.dart';
+import '../widgets/motion.dart';
 import 'evaluation_screen.dart';
 
 class SimulationScreen extends StatefulWidget {
@@ -22,6 +23,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
   final _scroll = ScrollController();
 
   int _timeRemaining = 300;
+  int _totalTime = 300;
   Timer? _timer;
   bool _waitingForReply = false;
   bool _sessionActive = true;
@@ -31,6 +33,7 @@ class _SimulationScreenState extends State<SimulationScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _timeRemaining = context.read<AppSettings>().simulationTime;
+      _totalTime = _timeRemaining;
       _startTimer();
       setState(() {});
     });
@@ -126,11 +129,13 @@ class _SimulationScreenState extends State<SimulationScreen> {
   @override
   Widget build(BuildContext context) {
     final session = context.watch<SessionManager>();
-    return Scaffold(
-      backgroundColor: AppColors.purpleDeep,
+    // The exam can't be left with the back button.
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
       appBar: AppBar(
-        title: Text(AppStrings(context.watch<AppSettings>().isArabic).osceSimulation),
-        backgroundColor: AppColors.purpleDeep,
+        title: Text(
+            AppStrings(context.watch<AppSettings>().isArabic).osceSimulation),
         automaticallyImplyLeading: false,
       ),
       body: SafeArea(
@@ -142,71 +147,95 @@ class _SimulationScreenState extends State<SimulationScreen> {
           ],
         ),
       ),
+    ),
     );
   }
 
+  Color get _timeColor {
+    if (_timeRemaining <= 30) return AppColors.danger;
+    if (_timeRemaining <= 60) return AppColors.warning;
+    return AppColors.accent;
+  }
+
   Widget _timerHeader() {
-    return Opacity(
+    final s = AppStrings(context.watch<AppSettings>().isArabic);
+    final fraction = _totalTime == 0 ? 0.0 : _timeRemaining / _totalTime;
+    return AnimatedOpacity(
+      duration: AppMotion.base,
       opacity: _sessionActive ? 1.0 : 0.6,
       child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 14),
-        decoration: const BoxDecoration(gradient: AppColors.heroGradient),
+        margin: const EdgeInsets.fromLTRB(16, 4, 16, 0),
+        padding: const EdgeInsets.fromLTRB(14, 12, 14, 12),
+        decoration: BoxDecoration(
+          color: AppColors.surface,
+          borderRadius: BorderRadius.circular(AppRadius.lg),
+          border: Border.all(color: AppColors.border),
+        ),
         child: Column(
           children: [
-            Text('${AppStrings(context.watch<AppSettings>().isArabic).taskTimeRemaining}$_formattedTime',
-                textDirection: TextDirection.ltr,
-                style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white)),
-            const SizedBox(height: 8),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                  decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(100)),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Icon(Icons.search, size: 15, color: Colors.white),
-                      const SizedBox(width: 5),
-                      Text(AppStrings(context.watch<AppSettings>().isArabic).testPhase,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600)),
-                    ],
+                _LiveBadge(label: s.testPhase, active: _sessionActive),
+                const Spacer(),
+                TweenAnimationBuilder<Color?>(
+                  tween: ColorTween(end: _timeColor),
+                  duration: AppMotion.slow,
+                  builder: (_, c, __) => Text(
+                    _formattedTime,
+                    textDirection: TextDirection.ltr,
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: -0.5,
+                      fontFeatures: const [FontFeature.tabularFigures()],
+                      color: c,
+                    ),
                   ),
                 ),
-                const SizedBox(width: 10),
-                GestureDetector(
-                  onTap: _endSession,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 6),
-                    decoration: BoxDecoration(
-                        color: Colors.red.withValues(alpha: 0.8),
-                        borderRadius: BorderRadius.circular(100)),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.stop, size: 15, color: Colors.white),
-                        const SizedBox(width: 5),
-                        Text(AppStrings(context.watch<AppSettings>().isArabic).endSession,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600)),
-                      ],
+                const SizedBox(width: 12),
+                Pressable(
+                  scale: 0.94,
+                  child: Material(
+                    color: AppColors.dangerSoft,
+                    borderRadius: BorderRadius.circular(100),
+                    child: InkWell(
+                      onTap: _endSession,
+                      borderRadius: BorderRadius.circular(100),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 7),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.stop_rounded,
+                                size: 16, color: AppColors.danger),
+                            const SizedBox(width: 4),
+                            Text(s.endSession,
+                                style: const TextStyle(
+                                    color: AppColors.danger,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600)),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
               ],
+            ),
+            const SizedBox(height: 12),
+            TweenAnimationBuilder<double>(
+              tween: Tween(end: fraction.clamp(0.0, 1.0).toDouble()),
+              duration: const Duration(milliseconds: 1000),
+              builder: (_, v, __) => ClipRRect(
+                borderRadius: BorderRadius.circular(4),
+                child: LinearProgressIndicator(
+                  value: v,
+                  minHeight: 4,
+                  backgroundColor: AppColors.surfaceRaised,
+                  valueColor: AlwaysStoppedAnimation(_timeColor),
+                ),
+              ),
             ),
           ],
         ),
@@ -215,25 +244,38 @@ class _SimulationScreenState extends State<SimulationScreen> {
   }
 
   Widget _chatList(SessionManager session) {
+    final now = DateTime.now();
     return ListView(
       controller: _scroll,
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
       children: [
-        ...session.messages.map((m) => MessageBubble(message: m)),
+        ...session.messages.map((m) => FadeSlideIn(
+              key: ValueKey(m.id),
+              offset: 10,
+              duration: AppMotion.base,
+              // Only animate messages that just arrived, not on scroll-back.
+              animate: now.difference(m.timestamp).inMilliseconds < 1500,
+              child: MessageBubble(message: m),
+            )),
         if (!_sessionActive)
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(
-                    width: 14,
-                    height: 14,
-                    child: CircularProgressIndicator(strokeWidth: 2)),
-                const SizedBox(width: 8),
-                Text(AppStrings(context.watch<AppSettings>().isArabic).sessionEndedEval,
-                    style: const TextStyle(fontSize: 12, color: Colors.black54)),
-              ],
+          FadeSlideIn(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                      width: 14,
+                      height: 14,
+                      child: CircularProgressIndicator(strokeWidth: 2)),
+                  const SizedBox(width: 10),
+                  Text(
+                      AppStrings(context.watch<AppSettings>().isArabic)
+                          .sessionEndedEval,
+                      style: const TextStyle(
+                          fontSize: 12, color: AppColors.textSecondary)),
+                ],
+              ),
             ),
           ),
       ],
@@ -241,54 +283,120 @@ class _SimulationScreenState extends State<SimulationScreen> {
   }
 
   Widget _inputBar() {
+    final s = AppStrings(context.watch<AppSettings>().isArabic);
+    final disabled = _isSendDisabled;
     return Container(
-      decoration: BoxDecoration(
-        color: AppColors.purpleDark,
-        border: Border(top: BorderSide(color: AppColors.cyan.withValues(alpha: 0.3))),
+      decoration: const BoxDecoration(
+        color: AppColors.surface,
+        border: Border(top: BorderSide(color: AppColors.border)),
       ),
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Expanded(
             child: TextField(
               controller: _input,
               enabled: _sessionActive,
-              style: const TextStyle(color: Colors.black87),
+              style: const TextStyle(color: AppColors.text, fontSize: 15),
               minLines: 1,
               maxLines: 4,
               textInputAction: TextInputAction.send,
               onSubmitted: (_) => _sendMessage(),
               decoration: InputDecoration(
-                hintText: AppStrings(context.watch<AppSettings>().isArabic).typeResponse,
-                filled: true,
-                fillColor: AppColors.purpleDark,
+                hintText: s.typeResponse,
                 contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    borderSide: BorderSide.none),
+                    borderRadius: BorderRadius.circular(22),
+                    borderSide: const BorderSide(color: AppColors.border)),
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(22),
+                    borderSide: const BorderSide(color: AppColors.border)),
+                disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(22),
+                    borderSide: const BorderSide(color: AppColors.border)),
+                focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(22),
+                    borderSide:
+                        const BorderSide(color: AppColors.accent, width: 1.5)),
               ),
             ),
           ),
           const SizedBox(width: 10),
-          GestureDetector(
-            onTap: _isSendDisabled ? null : _sendMessage,
-            child: Container(
-              width: 42,
-              height: 42,
-              decoration: BoxDecoration(
-                color: _isSendDisabled ? Colors.grey.shade800 : AppColors.lime,
-                shape: BoxShape.circle,
+          Pressable(
+            enabled: !disabled,
+            scale: 0.88,
+            child: GestureDetector(
+              onTap: disabled ? null : _sendMessage,
+              child: AnimatedContainer(
+                duration: AppMotion.base,
+                curve: AppMotion.enter,
+                width: 46,
+                height: 46,
+                decoration: BoxDecoration(
+                  color: disabled ? AppColors.surfaceRaised : AppColors.accent,
+                  shape: BoxShape.circle,
+                ),
+                child: AnimatedSwitcher(
+                  duration: AppMotion.base,
+                  transitionBuilder: (child, a) =>
+                      ScaleTransition(scale: a, child: child),
+                  child: _waitingForReply
+                      ? const Padding(
+                          key: ValueKey('wait'),
+                          padding: EdgeInsets.all(13),
+                          child: CircularProgressIndicator(
+                              strokeWidth: 2, color: AppColors.textSecondary),
+                        )
+                      : Icon(Icons.arrow_upward_rounded,
+                          key: const ValueKey('send'),
+                          size: 22,
+                          color: disabled
+                              ? AppColors.textMuted
+                              : AppColors.onAccent),
+                ),
               ),
-              child: _waitingForReply
-                  ? const Padding(
-                      padding: EdgeInsets.all(11),
-                      child: CircularProgressIndicator(
-                          strokeWidth: 2, color: Colors.white),
-                    )
-                  : const Icon(Icons.send, color: AppColors.purple, size: 18),
             ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class _LiveBadge extends StatelessWidget {
+  final String label;
+  final bool active;
+  const _LiveBadge({required this.label, required this.active});
+
+  @override
+  Widget build(BuildContext context) {
+    final dot = Container(
+      width: 8,
+      height: 8,
+      decoration: BoxDecoration(
+        color: active ? AppColors.accent : AppColors.textMuted,
+        shape: BoxShape.circle,
+      ),
+    );
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: AppColors.surfaceRaised,
+        borderRadius: BorderRadius.circular(100),
+        border: Border.all(color: AppColors.border),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          active ? Pulse(child: dot) : dot,
+          const SizedBox(width: 7),
+          Text(label,
+              style: const TextStyle(
+                  color: AppColors.textSecondary,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500)),
         ],
       ),
     );
@@ -302,77 +410,87 @@ class MessageBubble extends StatelessWidget {
   bool get _isDoctor => message.sender == MessageSender.doctor;
   bool get _isSystem => message.sender == MessageSender.system;
 
-  bool _isArabic(String s) => RegExp(r'[\u0600-\u06FF]').hasMatch(s);
+  bool _isArabic(String s) => RegExp(r'[؀-ۿ]').hasMatch(s);
 
   @override
   Widget build(BuildContext context) {
     if (_isSystem) {
       return Container(
         alignment: Alignment.center,
-        margin: const EdgeInsets.symmetric(vertical: 6),
+        margin: const EdgeInsets.symmetric(vertical: 8),
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
-              color: AppColors.purple.withValues(alpha: 0.1),
+              color: AppColors.surfaceRaised,
               borderRadius: BorderRadius.circular(100)),
           child: Text(message.text,
-              style: const TextStyle(fontSize: 12, color: Colors.black54)),
+              style: const TextStyle(
+                  fontSize: 12, color: AppColors.textSecondary)),
         ),
       );
     }
 
+    const big = Radius.circular(18);
+    const small = Radius.circular(6);
+    final radius = _isDoctor
+        ? const BorderRadiusDirectional.only(
+            topStart: big, topEnd: big, bottomStart: big, bottomEnd: small)
+        : const BorderRadiusDirectional.only(
+            topStart: big, topEnd: big, bottomStart: small, bottomEnd: big);
+
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 6),
       child: Column(
         crossAxisAlignment:
             _isDoctor ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 6),
             child: Text(message.sender.displayName,
                 style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
                     color: _isDoctor
-                        ? AppColors.cyan
-                        : AppColors.mint)),
+                        ? AppColors.accent
+                        : AppColors.textMuted)),
           ),
-          const SizedBox(height: 4),
-          Container(
-            constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width - 80),
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-            decoration: BoxDecoration(
-              color: _isDoctor
-                  ? AppColors.purple
-                  : AppColors.purpleDark,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(
-                  color: _isDoctor ? AppColors.cyan.withValues(alpha: 0.4) : AppColors.cyan.withValues(alpha: 0.5), width: 1),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.08),
-                    blurRadius: 6,
-                    offset: const Offset(0, 2)),
-              ],
+          const SizedBox(height: 5),
+          AnimatedSize(
+            duration: AppMotion.base,
+            curve: AppMotion.enter,
+            alignment: _isDoctor
+                ? AlignmentDirectional.centerEnd.resolve(Directionality.of(context))
+                : AlignmentDirectional.centerStart.resolve(Directionality.of(context)),
+            child: Container(
+              constraints: BoxConstraints(
+                  maxWidth: MediaQuery.of(context).size.width * 0.78),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 11),
+              decoration: BoxDecoration(
+                color: _isDoctor ? AppColors.accent : AppColors.surfaceRaised,
+                borderRadius: radius,
+                border: _isDoctor ? null : Border.all(color: AppColors.border),
+              ),
+              child: message.isLoading
+                  ? const TypingIndicator()
+                  : Text(
+                      message.text,
+                      textDirection: _isArabic(message.text)
+                          ? TextDirection.rtl
+                          : TextDirection.ltr,
+                      style: TextStyle(
+                          color:
+                              _isDoctor ? AppColors.onAccent : AppColors.text,
+                          fontSize: 15,
+                          height: 1.45),
+                    ),
             ),
-            child: message.isLoading
-                ? const TypingIndicator()
-                : Text(
-                    message.text,
-                    textDirection: _isArabic(message.text)
-                        ? TextDirection.rtl
-                        : TextDirection.ltr,
-                    style: TextStyle(
-                        color: _isDoctor ? Colors.white : Colors.black87,
-                        height: 1.4),
-                  ),
           ),
-          const SizedBox(height: 4),
+          const SizedBox(height: 5),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
+            padding: const EdgeInsets.symmetric(horizontal: 6),
             child: Text(DateFormat.jm().format(message.timestamp),
-                style: const TextStyle(fontSize: 11, color: Colors.black38)),
+                style:
+                    const TextStyle(fontSize: 11, color: AppColors.textMuted)),
           ),
         ],
       ),
@@ -380,6 +498,7 @@ class MessageBubble extends StatelessWidget {
   }
 }
 
+/// Three dots that bounce in sequence while the patient is "typing".
 class TypingIndicator extends StatefulWidget {
   const TypingIndicator({super.key});
 
@@ -388,16 +507,10 @@ class TypingIndicator extends StatefulWidget {
 }
 
 class _TypingIndicatorState extends State<TypingIndicator>
-    with TickerProviderStateMixin {
-  late final AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 1000))
-      ..repeat();
-  }
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+      vsync: this, duration: const Duration(milliseconds: 1200))
+    ..repeat();
 
   @override
   void dispose() {
@@ -408,31 +521,33 @@ class _TypingIndicatorState extends State<TypingIndicator>
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 40,
-      height: 12,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(3, (i) {
-          return AnimatedBuilder(
-            animation: _controller,
-            builder: (_, __) {
-              final t = (_controller.value + i * 0.18) % 1.0;
-              final scale = 0.8 + 0.4 * (1 - (2 * t - 1).abs());
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 2.5),
-                child: Transform.scale(
-                  scale: scale,
-                  child: Container(
-                    width: 8,
-                    height: 8,
-                    decoration: const BoxDecoration(
-                        color: Colors.white60, shape: BoxShape.circle),
+      width: 44,
+      height: 18,
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (_, __) => Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(3, (i) {
+            // Each dot rises and brightens in turn.
+            final t = ((_controller.value - i * 0.15) % 1.0 + 1.0) % 1.0;
+            final wave = t < 0.4 ? Curves.easeInOut.transform(t < 0.2 ? t / 0.2 : (0.4 - t) / 0.2) : 0.0;
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2.5),
+              child: Transform.translate(
+                offset: Offset(0, -4 * wave),
+                child: Container(
+                  width: 7,
+                  height: 7,
+                  decoration: BoxDecoration(
+                    color: Color.lerp(
+                        AppColors.textMuted, AppColors.text, wave),
+                    shape: BoxShape.circle,
                   ),
                 ),
-              );
-            },
-          );
-        }),
+              ),
+            );
+          }),
+        ),
       ),
     );
   }

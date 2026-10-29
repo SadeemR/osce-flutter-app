@@ -2,10 +2,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../l10n/app_strings.dart';
+import '../models/osce_case.dart';
 import '../models/app_settings.dart';
 import '../state/session_manager.dart';
 import '../theme/app_theme.dart';
 import '../widgets/common.dart';
+import '../widgets/motion.dart';
 import 'simulation_screen.dart';
 
 class PreparationScreen extends StatefulWidget {
@@ -17,6 +19,7 @@ class PreparationScreen extends StatefulWidget {
 
 class _PreparationScreenState extends State<PreparationScreen> {
   int _timeRemaining = 60;
+  int _totalTime = 60;
   Timer? _timer;
 
   @override
@@ -24,6 +27,7 @@ class _PreparationScreenState extends State<PreparationScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _timeRemaining = context.read<AppSettings>().preparationTime;
+      _totalTime = _timeRemaining;
       _startTimer();
       setState(() {});
     });
@@ -66,26 +70,28 @@ class _PreparationScreenState extends State<PreparationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.purpleDeep,
+    // The exam can't be left with the back button.
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
       appBar: AppBar(
-        title: Text(AppStrings(context.watch<AppSettings>().isArabic).preparationPhase),
-        backgroundColor: AppColors.purpleDeep,
+        title: Text(
+            AppStrings(context.watch<AppSettings>().isArabic).preparationPhase),
         automaticallyImplyLeading: false,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.fromLTRB(16, 8, 16, 40),
           child: Column(
             children: [
-              _caseCard(),
-              const SizedBox(height: 20),
-              _timerCard(),
-              const SizedBox(height: 40),
+              FadeSlideIn(child: _timerCard()),
+              const SizedBox(height: 16),
+              FadeSlideIn(delay: AppMotion.stagger * 2, child: _caseCard()),
             ],
           ),
         ),
       ),
+    ),
     );
   }
 
@@ -93,22 +99,18 @@ class _PreparationScreenState extends State<PreparationScreen> {
   Widget _caseCard() {
     final c = context.watch<SessionManager>().currentCase;
     final s = AppStrings(context.watch<AppSettings>().isArabic);
+    final isHistory = c.stationType == StationType.historyTaking;
     return CardContainer(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            children: [
-              const Icon(Icons.description, color: AppColors.purple),
-              const SizedBox(width: 8),
-              Text(s.caseInformation,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: AppColors.purple)),
-            ],
+          SectionLabel(
+            icon: Icons.description_outlined,
+            text: s.caseInformation,
+            trailing: Tag(
+                text: isHistory ? s.stationHistory : s.stationBadNews),
           ),
-          const Divider(height: 20),
+          const SizedBox(height: 16),
           if (c.patientInfo.trim().isNotEmpty)
             _InfoRow(label: s.patientLabel, value: c.patientInfo),
           if (c.complaint.trim().isNotEmpty)
@@ -119,102 +121,166 @@ class _PreparationScreenState extends State<PreparationScreen> {
             _InfoRow(label: s.situationLabel, value: c.situation),
           if (c.attachedFileName != null)
             _InfoRow(label: s.fileLabel, value: c.attachedFileName!),
-          const Divider(height: 20),
-          Row(
-            children: [
-              const Icon(Icons.format_list_numbered,
-                  size: 18, color: AppColors.purple),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(s.requiredTasks,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.purple)),
-              ),
-            ],
-          ),
-          const SizedBox(height: 8),
-          Text(s.task1, style: const TextStyle(height: 1.6)),
-          Text(s.task2, style: const TextStyle(height: 1.6)),
-          const SizedBox(height: 4),
+          const Divider(height: 28),
+          SectionLabel(icon: Icons.checklist_rounded, text: s.requiredTasks),
+          const SizedBox(height: 12),
+          _task(1, isHistory ? s.task1History : s.task1),
+          _task(2, isHistory ? s.task2History : s.task2),
+          const SizedBox(height: 6),
           Text(s.prepNote,
               style: const TextStyle(
                   fontSize: 12,
-                  fontStyle: FontStyle.italic,
-                  color: Colors.black54)),
+                  height: 1.5,
+                  color: AppColors.textMuted)),
+        ],
+      ),
+    );
+  }
+
+  Widget _task(int n, String text) {
+    // Strip a leading "1." / "1-" the strings may already contain.
+    final clean = text.replaceFirst(RegExp(r'^\s*[0-9٠-٩]+\s*[.\-)]\s*'), '');
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: 22,
+            height: 22,
+            margin: const EdgeInsets.only(top: 1),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: AppColors.surfaceRaised,
+              borderRadius: BorderRadius.circular(7),
+              border: Border.all(color: AppColors.border),
+            ),
+            child: Text('$n',
+                style: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.accent)),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(clean,
+                style: const TextStyle(height: 1.55, color: AppColors.text)),
+          ),
         ],
       ),
     );
   }
 
   Widget _timerCard() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        gradient: AppColors.heroGradient,
-        borderRadius: BorderRadius.circular(16),
-      ),
+    final s = AppStrings(context.watch<AppSettings>().isArabic);
+    final fraction = _totalTime == 0 ? 0.0 : _timeRemaining / _totalTime;
+    final urgent = _timeRemaining <= 10;
+    return CardContainer(
+      padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
+      borderColor: urgent ? const Color(0x55F5B84B) : null,
       child: Column(
         children: [
-          Text(AppStrings(context.watch<AppSettings>().isArabic).preparationTime,
-              style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 17,
-                  color: Colors.white)),
-          const SizedBox(height: 8),
-          Text(
-            _formattedTime,
-            textDirection: TextDirection.ltr,
-            style: const TextStyle(
-              fontSize: 52,
-              fontWeight: FontWeight.bold,
-              fontFeatures: [FontFeature.tabularFigures()],
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 12),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
-                decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.2),
-                    borderRadius: BorderRadius.circular(100)),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Icon(Icons.access_time, size: 16, color: Colors.white),
-                    const SizedBox(width: 6),
-                    Text(AppStrings(context.watch<AppSettings>().isArabic).preparationPhaseLabel,
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600)),
-                  ],
+              const Icon(Icons.schedule_rounded,
+                  size: 16, color: AppColors.textSecondary),
+              const SizedBox(width: 6),
+              Text(s.preparationTime,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 14,
+                      color: AppColors.textSecondary)),
+            ],
+          ),
+          const SizedBox(height: 20),
+          CountdownRing(
+            fraction: fraction,
+            label: _formattedTime,
+            caption: s.preparationPhaseLabel,
+            color: urgent ? AppColors.warning : AppColors.accent,
+          ),
+          const SizedBox(height: 22),
+          Pressable(
+            child: SizedBox(
+              width: double.infinity,
+              child: OutlinedButton.icon(
+                onPressed: _skipToSimulation,
+                icon: const Icon(Icons.skip_next_rounded, size: 20),
+                label: Text(s.skip),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Circular countdown that drains smoothly between the one-second ticks.
+class CountdownRing extends StatelessWidget {
+  final double fraction;
+  final String label;
+  final String caption;
+  final Color color;
+  final double size;
+
+  const CountdownRing({
+    super.key,
+    required this.fraction,
+    required this.label,
+    required this.caption,
+    required this.color,
+    this.size = 176,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: size,
+      height: size,
+      child: TweenAnimationBuilder<Color?>(
+        tween: ColorTween(end: color),
+        duration: AppMotion.slow,
+        builder: (context, c, _) => TweenAnimationBuilder<double>(
+          tween: Tween(end: fraction.clamp(0.0, 1.0).toDouble()),
+          duration: const Duration(milliseconds: 1000),
+          curve: Curves.linear,
+          builder: (context, v, _) => Stack(
+            alignment: Alignment.center,
+            children: [
+              SizedBox.expand(
+                child: CircularProgressIndicator(
+                  value: v,
+                  strokeWidth: 10,
+                  strokeCap: StrokeCap.round,
+                  backgroundColor: AppColors.surfaceRaised,
+                  valueColor: AlwaysStoppedAnimation(c ?? color),
                 ),
               ),
-              const SizedBox(width: 12),
-              GestureDetector(
-                onTap: _skipToSimulation,
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                  decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.2),
-                      borderRadius: BorderRadius.circular(100)),
-                  child: Text(AppStrings(context.watch<AppSettings>().isArabic).skip,
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    label,
+                    textDirection: TextDirection.ltr,
+                    style: const TextStyle(
+                      fontSize: 44,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: -1,
+                      fontFeatures: [FontFeature.tabularFigures()],
+                      color: AppColors.text,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(caption,
                       style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600)),
-                ),
+                          fontSize: 12, color: AppColors.textMuted)),
+                ],
               ),
             ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -228,17 +294,18 @@ class _InfoRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 6),
-      child: Row(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('$label:',
-              style: const TextStyle(fontWeight: FontWeight.w600)),
-          const SizedBox(width: 6),
-          Expanded(
-            child: Text(value,
-                style: const TextStyle(color: Colors.black54)),
-          ),
+          Text(label,
+              style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.textMuted)),
+          const SizedBox(height: 3),
+          Text(value,
+              style: const TextStyle(height: 1.5, color: AppColors.text)),
         ],
       ),
     );

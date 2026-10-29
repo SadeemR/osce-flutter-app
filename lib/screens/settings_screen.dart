@@ -17,7 +17,6 @@ class SettingsScreen extends StatelessWidget {
     final settings = context.watch<AppSettings>();
 
     return Scaffold(
-      backgroundColor: AppColors.purpleDeep,
       appBar: AppBar(title: const Text('Settings')),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -32,7 +31,7 @@ class SettingsScreen extends StatelessWidget {
                 max: 180,
                 divisions: (180 - 30) ~/ 15,
                 display: '${settings.preparationTime} ثانية',
-                color: AppColors.purple,
+                color: AppColors.accent,
                 onChanged: (v) => settings.setPreparationTime(v.round()),
               ),
               const SizedBox(height: 12),
@@ -43,7 +42,7 @@ class SettingsScreen extends StatelessWidget {
                 max: 600,
                 divisions: (600 - 120) ~/ 60,
                 display: _formattedSim(settings.simulationTime),
-                color: AppColors.purple,
+                color: AppColors.accent,
                 onChanged: (v) => settings.setSimulationTime(v.round()),
               ),
             ],
@@ -57,25 +56,26 @@ class SettingsScreen extends StatelessWidget {
               return Expanded(
                 child: GestureDetector(
                   onTap: () => settings.setLanguage(lang),
-                  child: Container(
+                  child: AnimatedContainer(
+                    duration: AppMotion.base,
                     margin: const EdgeInsets.symmetric(horizontal: 4),
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(
                       color: selected
-                          ? AppColors.cyan
+                          ? AppColors.accentSoft
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
                           color: selected
-                              ? AppColors.cyan
-                              : AppColors.purple.withValues(alpha: 0.3)),
+                              ? AppColors.accent
+                              : AppColors.border),
                     ),
                     child: Center(
-                      child: Text('${lang.flag} ${lang.displayName}',
+                      child: Text(lang.displayName,
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
                               color:
-                                  selected ? AppColors.purple : Colors.black54)),
+                                  selected ? AppColors.accent : AppColors.textSecondary)),
                     ),
                   ),
                 ),
@@ -107,17 +107,20 @@ class SettingsScreen extends StatelessWidget {
   }
 
   Widget _sectionTitle(String t) => Padding(
-        padding: const EdgeInsets.only(bottom: 8, right: 4),
+        padding: const EdgeInsetsDirectional.only(bottom: 10, start: 4),
         child: Text(t,
             style: const TextStyle(
-                fontWeight: FontWeight.bold, color: AppColors.purple)),
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: AppColors.textSecondary)),
       );
 
   Widget _card(Widget child) => Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-            color: AppColors.cardCream,
-            borderRadius: BorderRadius.circular(16)),
+            color: AppColors.surface,
+            borderRadius: BorderRadius.circular(AppRadius.lg),
+            border: Border.all(color: AppColors.border)),
         child: child,
       );
 
@@ -138,7 +141,7 @@ class SettingsScreen extends StatelessWidget {
           children: [
             Text(label),
             const Spacer(),
-            Text(display, style: const TextStyle(color: Colors.black54)),
+            Text(display, style: const TextStyle(color: AppColors.textSecondary)),
           ],
         ),
         Slider(
@@ -159,7 +162,7 @@ class SettingsScreen extends StatelessWidget {
           children: [
             Text(l, style: const TextStyle(fontWeight: FontWeight.w500)),
             const Spacer(),
-            Text(v, style: const TextStyle(color: Colors.black54)),
+            Text(v, style: const TextStyle(color: AppColors.textSecondary)),
           ],
         ),
       );
@@ -175,8 +178,9 @@ class PrivacyPolicyScreen extends StatelessWidget {
           margin: const EdgeInsets.only(bottom: 12),
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-              color: AppColors.cardCream,
-              borderRadius: BorderRadius.circular(12)),
+              color: AppColors.surface,
+              borderRadius: BorderRadius.circular(AppRadius.md),
+              border: Border.all(color: AppColors.border)),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -185,13 +189,12 @@ class PrivacyPolicyScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold, fontSize: 16)),
               const SizedBox(height: 8),
               Text(body,
-                  style: const TextStyle(color: Colors.black54, height: 1.6)),
+                  style: const TextStyle(color: AppColors.textSecondary, height: 1.6)),
             ],
           ),
         );
 
     return Scaffold(
-      backgroundColor: AppColors.purpleDeep,
       appBar: AppBar(title: const Text('Privacy Policy')),
       body: ListView(
         padding: const EdgeInsets.all(16),
@@ -200,7 +203,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
           const SizedBox(height: 4),
           const Text('آخر تحديث: مايو 2026',
-              style: TextStyle(fontSize: 12, color: Colors.black45)),
+              style: TextStyle(fontSize: 12, color: AppColors.textMuted)),
           const SizedBox(height: 16),
           section('البيانات التي نجمعها',
               'نجمع رقم الطالب، الدرجات، ونصوص المحادثات أثناء محاكاة OSCE.'),

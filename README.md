@@ -33,6 +33,7 @@ The app replaces both roles with AI:
 - 📋 **Rubric library** — upload, parse and reuse university marking sheets
 - 📊 **Per-criterion scoring** with written feedback, and shareable results
 - 🌐 **Arabic & English** — full RTL support and bilingual UI
+- 🎨 **Polished dark UI** — a consistent design system with smooth, purposeful motion (page transitions, live typing indicator, countdown ring, animated score reveal)
 - 💾 **Session persistence** — conversations and settings survive restarts
 - 🖥️ **Runs everywhere** — Web, macOS, Windows, Linux, Android and iOS from one codebase
 

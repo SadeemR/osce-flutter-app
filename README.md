@@ -15,20 +15,22 @@ OSCE (Objective Structured Clinical Examination) communication stations — brea
 
 The app replaces both roles with AI:
 
-1. **Enter any case** — type the patient details, complaint and findings, or upload a case file (PDF, TXT, …).
+1. **Enter any case** — pick the station type (breaking bad news or history taking), type the patient details, or upload a case file (PDF, TXT, …). Hidden details can be given to the AI patient only, to be revealed when the student asks the right question.
 2. **Timed preparation** — read the case against a countdown before the station starts, just like the real exam.
 3. **Live simulation** — talk to an AI patient (or companion) whose personality and reactions are built dynamically from the case.
-4. **Rubric-based evaluation** — upload your university's marking sheet; the app scores each criterion with its exact weights and gives feedback. With no rubric, it falls back to the **SPIKES** protocol.
+4. **Rubric-based evaluation** — upload your university's marking sheet; the app scores each criterion with its exact weights and gives feedback. With no rubric, it falls back to a default for the station type (**SPIKES** for bad news, a history-taking rubric for history taking).
 
 ## Screenshots
 
-| Case input | Simulation | Evaluation |
-|:---:|:---:|:---:|
-| ![Case input](docs/screenshots/case-input.png) | ![Simulation](docs/screenshots/simulation.png) | ![Evaluation](docs/screenshots/evaluation.png) |
+| Case setup | Live simulation (Arabic) | Rubric-based scores | AI feedback |
+|:---:|:---:|:---:|:---:|
+| <img src="docs/screenshots/case-input.png" width="200"> | <img src="docs/screenshots/simulation.png" width="200"> | <img src="docs/screenshots/evaluation.png" width="200"> | <img src="docs/screenshots/feedback.png" width="200"> |
 
 ## Features
 
 - 🧑‍⚕️ **Dynamic patient persona** — works for any case, not one hard-coded scenario
+- 🩺 **Two station types** — breaking bad news and history taking, each with its own patient behavior
+- 🔒 **Hidden patient details** — never shown to the student; the patient reveals each one only when asked, and the case form is locked once the exam starts
 - 📄 **File upload** — local PDF text extraction, plus support for DOCX, XLSX, CSV, JSON and TXT
 - 📋 **Rubric library** — upload, parse and reuse university marking sheets
 - 📊 **Per-criterion scoring** with written feedback, and shareable results

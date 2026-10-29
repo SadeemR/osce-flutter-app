@@ -84,7 +84,6 @@ The app connects to the deployed backend by default. To use your own server, cha
 
 ## Future Improvements
 
-- Per-user sessions on the backend (conversation state is currently shared)
 - Authentication and rate limiting on the API
 - Voice input/output for a more realistic station
 - Broader automated test coverage

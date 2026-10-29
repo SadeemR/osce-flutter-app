@@ -162,8 +162,10 @@ class _AnimatedBarState extends State<AnimatedBar>
     return ClipRRect(
       borderRadius: BorderRadius.circular(widget.height),
       child: SizedBox(
+        width: double.infinity,
         height: widget.height,
         child: Stack(
+          fit: StackFit.expand,
           children: [
             const Positioned.fill(
                 child: ColoredBox(color: AppColors.surfaceRaised)),
@@ -171,6 +173,9 @@ class _AnimatedBarState extends State<AnimatedBar>
               animation: _t,
               builder: (_, __) => FractionallySizedBox(
                 alignment: AlignmentDirectional.centerStart,
+                // Without a height factor the empty ColoredBox collapses
+                // to zero height and the fill is invisible.
+                heightFactor: 1,
                 widthFactor:
                     _reduceMotion(context) ? target : target * _t.value,
                 child: ColoredBox(color: widget.color),

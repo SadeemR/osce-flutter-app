@@ -446,7 +446,12 @@ class MessageBubble extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 6),
-            child: Text(message.sender.displayName,
+            child: Text(
+                _isDoctor
+                    ? AppStrings(context.watch<AppSettings>().isArabic)
+                        .senderDoctor
+                    : AppStrings(context.watch<AppSettings>().isArabic)
+                        .senderPatient,
                 style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w600,

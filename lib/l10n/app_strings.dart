@@ -3,6 +3,8 @@ class AppStrings {
   const AppStrings(this.isArabic);
 
   // ===== Case Input Screen =====
+  String get senderDoctor => isArabic ? 'الطبيب' : 'Doctor';
+  String get senderPatient => isArabic ? 'المريض' : 'Patient';
   String get stationType => isArabic ? 'نوع المحطة' : 'Station Type';
   String get stationBadNews => isArabic ? 'خبر سيئ' : 'Bad News';
   String get stationHistory => isArabic ? 'تاريخ مرضي' : 'History Taking';

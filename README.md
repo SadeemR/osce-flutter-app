@@ -1,94 +1,94 @@
-# OSCE Simulation — دليل التشغيل
+# OSCE Simulator — AI-Powered Clinical Communication Trainer
 
-محاكي محطات OSCE لمهارات التواصل بين الطبيب والمريض.
+A cross-platform Flutter app that lets medical students practice **OSCE communication stations** with an AI-simulated patient, then get **graded automatically against their own university's rubric**.
 
----
-
-## المتطلبات قبل البدء
-
-| البرنامج | الرابط |
-|---------|--------|
-| Flutter SDK (النسخة 3.3 أو أحدث) | https://docs.flutter.dev/get-started/install |
-| Git | https://git-scm.com/downloads |
-| متصفح Chrome (للتشغيل على الويب) | https://www.google.com/chrome |
+> 🎓 Graduation project · Flutter + Flask + PostgreSQL + Claude API
+> 🔗 Backend repository: [osce-backend](https://github.com/SadeemR/osce-backend)
 
 ---
 
-## خطوات التشغيل
+## The Problem
 
-### 1. تثبيت Flutter
+OSCE (Objective Structured Clinical Examination) communication stations — breaking bad news, taking a history, counseling — are hard to practice. Students need a trained standardized patient and an examiner, and both are scarce outside the actual exam.
 
-اتبعي تعليمات الموقع الرسمي حسب نظام تشغيلك (Mac / Windows):
-👉 https://docs.flutter.dev/get-started/install
+## The Solution
 
-بعد التثبيت تحققي أن كل شيء سليم:
+The app replaces both roles with AI:
 
-```bash
-flutter doctor
+1. **Enter any case** — type the patient details, complaint and findings, or upload a case file (PDF, TXT, …).
+2. **Timed preparation** — read the case against a countdown before the station starts, just like the real exam.
+3. **Live simulation** — talk to an AI patient (or companion) whose personality and reactions are built dynamically from the case.
+4. **Rubric-based evaluation** — upload your university's marking sheet; the app scores each criterion with its exact weights and gives feedback. With no rubric, it falls back to the **SPIKES** protocol.
+
+## Screenshots
+
+| Case input | Simulation | Evaluation |
+|:---:|:---:|:---:|
+| ![Case input](docs/screenshots/case-input.png) | ![Simulation](docs/screenshots/simulation.png) | ![Evaluation](docs/screenshots/evaluation.png) |
+
+## Features
+
+- 🧑‍⚕️ **Dynamic patient persona** — works for any case, not one hard-coded scenario
+- 📄 **File upload** — local PDF text extraction, plus support for DOCX, XLSX, CSV, JSON and TXT
+- 📋 **Rubric library** — upload, parse and reuse university marking sheets
+- 📊 **Per-criterion scoring** with written feedback, and shareable results
+- 🌐 **Arabic & English** — full RTL support and bilingual UI
+- 💾 **Session persistence** — conversations and settings survive restarts
+- 🖥️ **Runs everywhere** — Web, macOS, Windows, Linux, Android and iOS from one codebase
+
+## Architecture
+
+```mermaid
+flowchart LR
+    A[Flutter App] -- REST / JSON --> B[Flask API on Railway]
+    B -- persona & evaluation prompts --> C[Claude API]
+    B -- students & results --> D[(PostgreSQL)]
 ```
 
----
+The app handles UI, file processing and local storage; the backend builds the patient persona and evaluation prompts, talks to the LLM, and stores results.
 
-### 2. تحميل المشروع من GitHub
+## Tech Stack
 
-افتحي الترمينال وشغّلي:
+| Layer | Technologies |
+|---|---|
+| Frontend | Flutter (Dart), Provider, shared_preferences, Syncfusion PDF, Google Fonts (IBM Plex Sans Arabic) |
+| Backend | Python, Flask, Gunicorn, PostgreSQL |
+| AI | Anthropic Claude API |
+| Deployment | Railway |
+
+## Project Structure
+
+```
+lib/
+├── screens/     # Case input, preparation, simulation, evaluation, rubric library, settings
+├── services/    # API client, file processor, rubric parser
+├── state/       # Session manager, rubric store
+├── models/      # Case, chat message, evaluation result, rubric
+├── l10n/        # Arabic / English strings
+├── theme/       # App theme
+└── widgets/     # Shared UI components
+```
+
+## Getting Started
+
+**Requirements:** [Flutter SDK 3.3+](https://docs.flutter.dev/get-started/install)
 
 ```bash
 git clone https://github.com/SadeemR/osce-flutter-app.git
 cd osce-flutter-app
-```
-
----
-
-### 3. تثبيت المكتبات
-
-```bash
 flutter pub get
+flutter run -d chrome      # or: -d macos / -d windows
 ```
 
----
+The app connects to the deployed backend by default. To use your own server, change `_apiBaseURL` in `lib/models/app_settings.dart`.
 
-### 4. تشغيل التطبيق
+## Future Improvements
 
-**على المتصفح (Chrome):**
-```bash
-flutter run -d chrome
-```
+- Per-user sessions on the backend (conversation state is currently shared)
+- Authentication and rate limiting on the API
+- Voice input/output for a more realistic station
+- Broader automated test coverage
 
-**على الكمبيوتر مباشرة (Mac):**
-```bash
-flutter run -d macos
-```
+## Author
 
-**على الكمبيوتر مباشرة (Windows):**
-```bash
-flutter run -d windows
-```
-
----
-
-## في حال وجود مشاكل
-
-**مشكلة: `flutter` غير معروف كأمر**
-تأكدي أن Flutter مضاف لـ PATH — اتبعي تعليمات الموقع الرسمي حسب نظامك.
-
-**مشكلة: `flutter pub get` يعطي خطأ**
-```bash
-flutter clean
-flutter pub get
-```
-
-**مشكلة: Chrome لا يفتح**
-```bash
-flutter run -d web-server
-```
-ثم افتحي المتصفح على: `http://localhost:8080`
-
----
-
-## ملاحظات
-
-- التطبيق يحتاج اتصال بالإنترنت لعمل المحاكاة
-- يدعم اللغتين العربية والإنجليزية
-- يمكن رفع ملف PDF للحالة أو إدخال البيانات يدوياً
-ياً
+**Sadeem Mubarak** — [GitHub](https://github.com/SadeemR)
